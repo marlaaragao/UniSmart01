@@ -6,7 +6,6 @@
 
 package views;
 
-import com.vaadin.server.ExternalResource;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.HorizontalLayout;
@@ -15,9 +14,15 @@ import com.vaadin.ui.MenuBar;
 import com.vaadin.ui.MenuBar.Command;
 import com.vaadin.ui.MenuBar.MenuItem;
 import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.themes.Reindeer;
+import views.areas.LayoutCadastroAtuacao;
+import views.atuacaos.LayoutAtuacao;
 import views.disciplinas.LayoutCadastroDisciplinas;
-
 import views.disciplinas.LayoutDisciplinas;
+import views.professores.LayoutCadastroProfessores;
+import views.professores.LayoutProfessores;
+import views.turmas.LayoutCadastroTurmas;
+import views.turmas.LayoutTurmas;
 
 /**
  *
@@ -51,6 +56,7 @@ public class LayoutPrincipalTecnico extends VerticalLayout {
         content.setImmediate(true);
         content.setWidth("100%");
         content.setSpacing(true);
+        content.setStyleName(Reindeer.LAYOUT_BLUE);
         
         init();
         
@@ -85,6 +91,8 @@ public class LayoutPrincipalTecnico extends VerticalLayout {
     public void addMenuBar() {
 
         menubar.setWidth("100%");
+
+        /**********************************Disciplinas**************************************/
         final MenuBar.MenuItem disciplinas = menubar.addItem("Disciplinas", null);
         disciplinas.addItem("Mostrar Disciplinas", new Command() {
 
@@ -109,32 +117,83 @@ public class LayoutPrincipalTecnico extends VerticalLayout {
             }
         });
 
-        final MenuBar.MenuItem edit = menubar.addItem("Turmas", null);
-//        edit.addItem("Undo", menuCommand);
-//        edit.addItem("Redo", menuCommand).setEnabled(false);
-//        edit.addSeparator();
+        /****************************Turmas*******************************/
+        final MenuBar.MenuItem turmas = menubar.addItem("Turmas", null);
+        turmas.addItem("Mostrar Turmas", new Command() {
 
-        edit.addSeparator();
+            @Override
+            public void menuSelected(MenuItem selectedItem) {
+                content.removeAllComponents();
+                
+                LayoutTurmas l = new LayoutTurmas();
+                content.addComponent(l);
+            }
+        });
+        turmas.addSeparator();
 
-        final MenuBar.MenuItem view = menubar.addItem("Areas", null);
-//        view.addItem("Show/Hide Status Bar", menuCommand);
-//        view.addItem("Customize Toolbar...", menuCommand);
-//        view.addSeparator();
-//
-//        view.addItem("Actual Size", menuCommand);
-//        view.addItem("Zoom In", menuCommand);
-//        view.addItem("Zoom Out", menuCommand);
+        turmas.addItem("Nova Turma", new Command() {
+
+            @Override
+            public void menuSelected(MenuItem selectedItem) {
+                content.removeAllComponents();
+                
+                LayoutCadastroTurmas l = new LayoutCadastroTurmas(LayoutCadastroTurmas.Operacao.INCLUIR);
+                content.addComponent(l);
+            }
+        });
+
+        /*******************************Areas**********************************/
+        final MenuBar.MenuItem areas = menubar.addItem("Areas", null);
+        areas.addItem("Mostrar Areas de Atuação", new Command() {
+
+            @Override
+            public void menuSelected(MenuItem selectedItem) {
+                content.removeAllComponents();
+                
+                LayoutAtuacao l = new LayoutAtuacao();
+                content.addComponent(l);
+            }
+        });
+        areas.addSeparator();
+
+        areas.addItem("Nova Atuação", new Command() {
+
+            @Override
+            public void menuSelected(MenuItem selectedItem) {
+                content.removeAllComponents();
+                
+                LayoutCadastroAtuacao l = new LayoutCadastroAtuacao(LayoutCadastroAtuacao.Operacao.INCLUIR);
+                content.addComponent(l);
+            }
+        });
 
         addComponent(menubar);
         
+        /******************************Professores***************************************/
         final MenuBar.MenuItem professores = menubar.addItem("Professores", null);
-//        view.addItem("Show/Hide Status Bar", menuCommand);
-//        view.addItem("Customize Toolbar...", menuCommand);
-//        view.addSeparator();
-//
-//        view.addItem("Actual Size", menuCommand);
-//        view.addItem("Zoom In", menuCommand);
-//        view.addItem("Zoom Out", menuCommand);
+        professores.addItem("Mostrar Professores", new Command() {
+
+            @Override
+            public void menuSelected(MenuItem selectedItem) {
+                content.removeAllComponents();
+                
+                LayoutProfessores l = new LayoutProfessores();
+                content.addComponent(l);
+            }
+        });
+        professores.addSeparator();
+
+        professores.addItem("Novo Professor", new Command() {
+
+            @Override
+            public void menuSelected(MenuItem selectedItem) {
+                content.removeAllComponents();
+                
+                LayoutCadastroProfessores l = new LayoutCadastroProfessores(LayoutCadastroProfessores.Operacao.INCLUIR);
+                content.addComponent(l);
+            }
+        });
+
 
         addComponent(menubar);
     }

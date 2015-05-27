@@ -24,32 +24,37 @@ public class ProfessorDao {
         professor.setId(getProximoCodigo());
         
         PreparedStatement ps = DBConnection.getInstance().prepareStatement
-        ("insert into professor  "
+        ("insert into professor (id, nome, cpf, atuacao) "
                 + "values (?, ?, ?, ?)");
         
-        ps.setInt(1, professor.getId());
+        ps.setInt(1, getProximoCodigo());
+        ps.setString(2, professor.getNome());
+        ps.setString(3, professor.getCpf());
+        ps.setInt(4, professor.getAtuacao());
 
 
         ps.execute();
     }
 
 
-    public List<Professor> select() throws SQLException {
-        
-        List<Professor> listaProfessors = new ArrayList<>();
+    public Professor select(int id) throws SQLException {
+
+        Professor professor = null;
         PreparedStatement ps = DBConnection.getInstance().prepareStatement
-        ("Select * from Professor");
+        ("Select * from Professor where id = ?");
+        ps.setInt(1, id);
         
         ResultSet rs = ps.executeQuery();
         
-        while (rs.next()) {
-            Professor professor = new Professor();
+        if (rs.next()) {
+            professor = new Professor();
             professor.setId(rs.getInt("id"));
+            professor.setNome(rs.getString("nome"));
+            professor.setCpf(rs.getString("cpf"));
+            professor.setAtuacao(rs.getInt("atuacao"));
 
-
-            listaProfessors.add(professor);
         }
-        return listaProfessors;
+        return professor;
 
     }
     
@@ -64,27 +69,16 @@ public class ProfessorDao {
         while (rs.next()) {
             Professor professor = new Professor();
             professor.setId(rs.getInt("id"));
+            professor.setNome(rs.getString("nome"));
+            professor.setCpf(rs.getString("cpf"));
+            professor.setAtuacao(rs.getInt("atuacao"));
 
             listaProfessors.add(professor);
         }
         return listaProfessors;
 
     }
-    
-    public Boolean professorExiste(Professor professor) throws SQLException {
-        
-        PreparedStatement ps = DBConnection.getInstance().prepareStatement("Select * from professor where  ");
-        
-        ps.setInt(1, professor.getId());
 
-        
-        ResultSet rs = ps.executeQuery();
-        
-        return rs.next();
-
-    }
-
-    
     
     private int getProximoCodigo() throws SQLException {
         PreparedStatement ps = DBConnection.getInstance().prepareStatement("Select max(id) as maximo "
@@ -97,4 +91,22 @@ public class ProfessorDao {
         }
         return 1;
     }
+    
+    public void update(Professor professor)  {
+        PreparedStatement ps;
+        try {
+            ps = DBConnection.getInstance().prepareStatement("Update professor set "
+                    + "nome = ?, cpf = ?, atuacao = ?, where id = ?");
+
+            ps.setString(1, professor.getNome());
+            ps.setString(2, professor.getCpf());
+            ps.setInt(4, professor.getAtuacao());
+            ps.setInt(4, professor.getId());
+            ps.execute();
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+    
 }

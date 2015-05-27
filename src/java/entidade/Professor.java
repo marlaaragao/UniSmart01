@@ -15,7 +15,7 @@ public class Professor {
     private int id;
     private String nome;
     private String cpf;
-    private int area;
+    private int atuacao;
 
     public Professor() {
     }
@@ -24,7 +24,7 @@ public class Professor {
         this.id = id;
         this.nome = nome;
         this.cpf = cpf;
-        this.area = area;
+        this.atuacao = area;
     }
 
     public int getId() {
@@ -51,12 +51,12 @@ public class Professor {
         this.cpf = cpf;
     }
 
-    public int getArea() {
-        return area;
+    public int getAtuacao() {
+        return atuacao;
     }
 
-    public void setArea(int area) {
-        this.area = area;
+    public void setAtuacao(int area) {
+        this.atuacao = area;
     }
     
     

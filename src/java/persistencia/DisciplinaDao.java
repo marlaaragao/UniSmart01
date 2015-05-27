@@ -13,8 +13,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -38,13 +36,13 @@ public class DisciplinaDao {
     }
 
 
-    public Disciplina select() {
+    public Disciplina select(int id) {
         
         PreparedStatement ps;
         try {
             ps = DBConnection.getInstance().prepareStatement
                 ("Select * from Disciplinas where id = ?");
-            
+            ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
         
         Disciplina disciplina = null;
@@ -124,7 +122,5 @@ public class DisciplinaDao {
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-
-
     }
 }

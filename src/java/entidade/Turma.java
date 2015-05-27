@@ -20,11 +20,12 @@ public class Turma {
     private String dias_semana;
     private String periodo;
     private int horario;
+    private boolean ativa;
 
     public Turma() {
     }
 
-    public Turma(int id, String descricao, int disciplina, int max_alunos, int professor, String dias_semana, String periodo, int horario) {
+    public Turma(int id, String descricao, int disciplina, int max_alunos, int professor, String dias_semana, String periodo, int horario, boolean ativa) {
         this.id = id;
         this.descricao = descricao;
         this.disciplina = disciplina;
@@ -33,6 +34,15 @@ public class Turma {
         this.dias_semana = dias_semana;
         this.periodo = periodo;
         this.horario = horario;
+        this.ativa = ativa;
+    }
+
+    public boolean isAtiva() {
+        return ativa;
+    }
+
+    public void setAtiva(boolean ativa) {
+        this.ativa = ativa;
     }
 
     public int getId() {

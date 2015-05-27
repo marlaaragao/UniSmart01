@@ -24,11 +24,11 @@ public class AtuacaoDao {
         area.setId(getProximoCodigo());
         
         PreparedStatement ps = DBConnection.getInstance().prepareStatement
-        ("insert into atuacao (id, ) "
-                + "values (?, ?, ?, ?)");
+        ("insert into atuacao (id, descricao) "
+                + "values (?, ?)");
         
-        ps.setInt(1, area.getId());
-
+        ps.setInt(1, getProximoCodigo());
+        ps.setString(2, area.getDescricao());
 
         ps.execute();
     }
@@ -86,19 +86,6 @@ public class AtuacaoDao {
 
     }
     
-    public Boolean areaExiste(Atuacao area) throws SQLException {
-        
-        PreparedStatement ps = DBConnection.getInstance().prepareStatement("Select * from atuacao where nome_area = ? and senha = ? ");
-        
-        
-        ResultSet rs = ps.executeQuery();
-        
-        return rs.next();
-
-    }
-
-    
-    
     private int getProximoCodigo() throws SQLException {
         PreparedStatement ps = DBConnection.getInstance().prepareStatement("Select max(id) as maximo "
                 + " from area ");
@@ -109,5 +96,22 @@ public class AtuacaoDao {
             return rs.getInt("maximo") + 1;
         }
         return 1;
+    }
+    
+    public void update(Atuacao atuacao)  {
+        PreparedStatement ps;
+        try {
+            ps = DBConnection.getInstance().prepareStatement("Update atuacao set "
+                    + "descricao = ? where id = ?");
+
+            ps.setString(1, atuacao.getDescricao());
+            ps.setInt(4, atuacao.getId());
+            ps.execute();
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
+
     }
 }
