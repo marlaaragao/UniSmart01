@@ -1,5 +1,4 @@
 
-import com.vaadin.annotations.Theme;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.ui.UI;
 import conexao.CreateTables;
@@ -16,7 +15,6 @@ import views.LayoutLogin;
  *
  * @author Marla Aragão
  */
-@Theme("chameleon")
 public class Main extends UI {
     
     @Override

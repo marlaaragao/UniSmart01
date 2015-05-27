@@ -47,7 +47,7 @@ public class LayoutCadastroDisciplinas extends VerticalLayout {
         setSpacing(true);
         setMargin(true);
         
-        Label label = new Label("<font size=\"2\" color=\"#CC3300\"><b>CADASTRO</b></font>"
+        Label label = new Label("<font size=\"2\" color=\"#287ece\"><b>Cadastro Disciplina</b></font>"
         , ContentMode.HTML);
         
         addComponent(label);
