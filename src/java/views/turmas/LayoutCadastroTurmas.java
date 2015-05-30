@@ -26,13 +26,9 @@ import entidade.Turma;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import persistencia.AtuacaoDao;
 import persistencia.DisciplinaDao;
 import persistencia.ProfessorDao;
 import persistencia.TurmaDao;
-import views.LayoutPrincipalTecnico;
 
 /**
  *
@@ -52,11 +48,13 @@ public class LayoutCadastroTurmas extends VerticalLayout {
     private TextField periodo;
     private TextField horario;
     private CheckBox ativa;
-    private String dias;
+    private static String dias;
+    private VerticalLayout content;
 
-    public LayoutCadastroTurmas(Operacao operacao) {
+    public LayoutCadastroTurmas(Operacao operacao, VerticalLayout content) {
         
         this.operacao = operacao;
+        this.content = content;
         
         setImmediate(true);
         setSpacing(true);
@@ -132,6 +130,7 @@ public class LayoutCadastroTurmas extends VerticalLayout {
         diasSemana.add("Sex");
         diasSemana.add("Sab");
 
+        dias = "[seg]";
         dias_semana = new OptionGroup("Dias da semana:", diasSemana);
         dias_semana.select("Seg");
         dias_semana.setImmediate(true);
@@ -140,7 +139,7 @@ public class LayoutCadastroTurmas extends VerticalLayout {
 
             @Override
             public void valueChange(Property.ValueChangeEvent event) {
-                dias += event.getProperty();
+                dias = event.getProperty().toString();
             }
         });
         
@@ -169,7 +168,13 @@ public class LayoutCadastroTurmas extends VerticalLayout {
         this.addComponent(professor);
         this.addComponent(max_alunos);
         this.addComponent(dias_semana);
+        this.addComponent(label);
+        this.addComponent(label2);
+        this.addComponent(label3);
         this.addComponent(periodo);
+        this.addComponent(label4);
+        this.addComponent(label5);
+        this.addComponent(label6);
         this.addComponent(horario);
         this.addComponent(ativa);
         
@@ -193,8 +198,9 @@ public class LayoutCadastroTurmas extends VerticalLayout {
 
             @Override
             public void buttonClick(Button.ClickEvent event) {
-                LayoutPrincipalTecnico l = new LayoutPrincipalTecnico();
-                UI.getCurrent().setContent(l);
+                LayoutTurmas l = new LayoutTurmas(content);
+                content.removeAllComponents();
+                content.addComponent(l);
             }
         });
         

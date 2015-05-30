@@ -36,8 +36,12 @@ public class LayoutDisciplinas extends VerticalLayout {
     private Button btnAlterar;
     private Button btnNovo;
     private TextField search;
+    private VerticalLayout content;
     
-    public LayoutDisciplinas() {
+    public LayoutDisciplinas(VerticalLayout content) {
+        
+        this.content = content;
+        
         setImmediate(true);
         setSpacing(true);
         setMargin(true);
@@ -82,7 +86,7 @@ public class LayoutDisciplinas extends VerticalLayout {
                     
                     Disciplina disciplina = (Disciplina) rowId;
                     
-                    LayoutCadastroDisciplinas l = new LayoutCadastroDisciplinas(LayoutCadastroDisciplinas.Operacao.ALTERAR);
+                    LayoutCadastroDisciplinas l = new LayoutCadastroDisciplinas(LayoutCadastroDisciplinas.Operacao.ALTERAR, content);
                     l.loadDados(disciplina);
                     
                     UI.getCurrent().setContent(l);
@@ -98,7 +102,7 @@ public class LayoutDisciplinas extends VerticalLayout {
 
             @Override
             public void buttonClick(Button.ClickEvent event) {
-                LayoutCadastroDisciplinas l = new LayoutCadastroDisciplinas(LayoutCadastroDisciplinas.Operacao.INCLUIR);
+                LayoutCadastroDisciplinas l = new LayoutCadastroDisciplinas(LayoutCadastroDisciplinas.Operacao.INCLUIR, content);
                 UI.getCurrent().setContent(l);
             }
         });

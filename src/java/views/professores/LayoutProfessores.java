@@ -36,8 +36,12 @@ public class LayoutProfessores extends VerticalLayout {
     private Button btnAlterar;
     private Button btnNovo;
     private TextField search;
+    private VerticalLayout content;
     
-    public LayoutProfessores() {
+    public LayoutProfessores(VerticalLayout content) {
+        
+        this.content = content;
+        
         setImmediate(true);
         setSpacing(true);
         setMargin(true);
@@ -82,10 +86,12 @@ public class LayoutProfessores extends VerticalLayout {
                     
                     Professor professor = (Professor) rowId;
                     
-                    LayoutCadastroProfessores l = new LayoutCadastroProfessores(LayoutCadastroProfessores.Operacao.ALTERAR);
+                    LayoutCadastroProfessores l = new LayoutCadastroProfessores
+                                (LayoutCadastroProfessores.Operacao.ALTERAR, content);
                     l.loadDados(professor);
                     
-                    UI.getCurrent().setContent(l);
+                    content.removeAllComponents();
+                    content.addComponent(l);
                 }
             }
         });
@@ -98,8 +104,9 @@ public class LayoutProfessores extends VerticalLayout {
 
             @Override
             public void buttonClick(Button.ClickEvent event) {
-                LayoutCadastroProfessores l = new LayoutCadastroProfessores(LayoutCadastroProfessores.Operacao.INCLUIR);
-                UI.getCurrent().setContent(l);
+                LayoutCadastroProfessores l = new LayoutCadastroProfessores(LayoutCadastroProfessores.Operacao.INCLUIR, content);
+                content.removeAllComponents();
+                content.addComponent(l);
             }
         });
         
@@ -148,7 +155,7 @@ public class LayoutProfessores extends VerticalLayout {
       
         tabela_.addContainerProperty("Id", Integer.class, null);
         tabela_.addContainerProperty("Nome", String.class, null);
-        tabela_.addContainerProperty("CPF", Integer.class, null);
+        tabela_.addContainerProperty("CPF", String.class, null);
         tabela_.addContainerProperty("Area", String.class, null);
         
         tabela_.setColumnHeaders(new String[]{"Id", "Nome", "CPF", "Área"});
@@ -172,7 +179,7 @@ public class LayoutProfessores extends VerticalLayout {
                 item.getItemProperty("Id").setValue(p.getId());
                 item.getItemProperty("Nome").setValue(p.getNome());
                 item.getItemProperty("CPF").setValue(p.getCpf());
-                item.getItemProperty("Area").setValue(p.getAtuacao());
+                item.getItemProperty("Area").setValue(new AtuacaoDao().select(p.getAtuacao()).getDescricao());
             }
             
         } catch (Exception e) {

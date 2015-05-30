@@ -6,16 +6,13 @@
 
 package views.professores;
 
-import com.vaadin.server.UserError;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Button;
-import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.TextField;
-import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import entidade.Atuacao;
 import entidade.Professor;
@@ -38,10 +35,12 @@ public class LayoutCadastroProfessores extends VerticalLayout {
     private TextField ano;
     private TextField cpf;
     private ComboBox atuacao;
+    private VerticalLayout content;
 
-    public LayoutCadastroProfessores(Operacao operacao) {
+    public LayoutCadastroProfessores(Operacao operacao, VerticalLayout content) {
         
         this.operacao = operacao;
+        this.content = content;
         
         setImmediate(true);
         setSpacing(true);
@@ -112,8 +111,9 @@ public class LayoutCadastroProfessores extends VerticalLayout {
 
             @Override
             public void buttonClick(Button.ClickEvent event) {
-                LayoutPrincipalTecnico l = new LayoutPrincipalTecnico();
-                UI.getCurrent().setContent(l);
+                LayoutProfessores l = new LayoutProfessores(content);
+                content.removeAllComponents();
+                content.addComponent(l);
             }
         });
         

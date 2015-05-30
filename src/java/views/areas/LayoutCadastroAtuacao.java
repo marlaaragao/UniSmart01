@@ -8,8 +8,6 @@ package views.areas;
 
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Button;
-import com.vaadin.ui.CheckBox;
-import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
@@ -31,10 +29,12 @@ public class LayoutCadastroAtuacao extends VerticalLayout {
     private Button btnSalvar;
     private Button btnVoltar;
     private Operacao operacao;
+    private VerticalLayout content;
 
-    public LayoutCadastroAtuacao(Operacao operacao) {
+    public LayoutCadastroAtuacao(Operacao operacao, VerticalLayout content) {
         
         this.operacao = operacao;
+        this.content = content;
         
         setImmediate(true);
         setSpacing(true);
@@ -84,8 +84,9 @@ public class LayoutCadastroAtuacao extends VerticalLayout {
 
             @Override
             public void buttonClick(Button.ClickEvent event) {
-                LayoutPrincipalTecnico l = new LayoutPrincipalTecnico();
-                UI.getCurrent().setContent(l);
+                views.atuacaos.LayoutAtuacao l = new views.atuacaos.LayoutAtuacao(content);
+                content.removeAllComponents();
+                content.addComponent(l);
             }
         });
         

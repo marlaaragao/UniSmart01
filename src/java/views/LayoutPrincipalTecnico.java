@@ -78,7 +78,7 @@ public class LayoutPrincipalTecnico extends VerticalLayout {
                 
                 content.removeAllComponents();
                 
-                LayoutDisciplinas l = new LayoutDisciplinas();
+                LayoutDisciplinas l = new LayoutDisciplinas(content);
                 content.addComponent(l);
             }
         });
@@ -100,7 +100,7 @@ public class LayoutPrincipalTecnico extends VerticalLayout {
             public void menuSelected(MenuItem selectedItem) {
                 content.removeAllComponents();
                 
-                LayoutDisciplinas l = new LayoutDisciplinas();
+                LayoutDisciplinas l = new LayoutDisciplinas(content);
                 content.addComponent(l);
             }
         });
@@ -112,7 +112,7 @@ public class LayoutPrincipalTecnico extends VerticalLayout {
             public void menuSelected(MenuItem selectedItem) {
                 content.removeAllComponents();
                 
-                LayoutCadastroDisciplinas l = new LayoutCadastroDisciplinas(LayoutCadastroDisciplinas.Operacao.INCLUIR);
+                LayoutCadastroDisciplinas l = new LayoutCadastroDisciplinas(LayoutCadastroDisciplinas.Operacao.INCLUIR, content);
                 content.addComponent(l);
             }
         });
@@ -125,7 +125,7 @@ public class LayoutPrincipalTecnico extends VerticalLayout {
             public void menuSelected(MenuItem selectedItem) {
                 content.removeAllComponents();
                 
-                LayoutTurmas l = new LayoutTurmas();
+                LayoutTurmas l = new LayoutTurmas(content);
                 content.addComponent(l);
             }
         });
@@ -137,7 +137,7 @@ public class LayoutPrincipalTecnico extends VerticalLayout {
             public void menuSelected(MenuItem selectedItem) {
                 content.removeAllComponents();
                 
-                LayoutCadastroTurmas l = new LayoutCadastroTurmas(LayoutCadastroTurmas.Operacao.INCLUIR);
+                LayoutCadastroTurmas l = new LayoutCadastroTurmas(LayoutCadastroTurmas.Operacao.INCLUIR, content);
                 content.addComponent(l);
             }
         });
@@ -150,7 +150,7 @@ public class LayoutPrincipalTecnico extends VerticalLayout {
             public void menuSelected(MenuItem selectedItem) {
                 content.removeAllComponents();
                 
-                LayoutAtuacao l = new LayoutAtuacao();
+                LayoutAtuacao l = new LayoutAtuacao(content);
                 content.addComponent(l);
             }
         });
@@ -162,7 +162,7 @@ public class LayoutPrincipalTecnico extends VerticalLayout {
             public void menuSelected(MenuItem selectedItem) {
                 content.removeAllComponents();
                 
-                LayoutCadastroAtuacao l = new LayoutCadastroAtuacao(LayoutCadastroAtuacao.Operacao.INCLUIR);
+                LayoutCadastroAtuacao l = new LayoutCadastroAtuacao(LayoutCadastroAtuacao.Operacao.INCLUIR, content);
                 content.addComponent(l);
             }
         });
@@ -177,7 +177,7 @@ public class LayoutPrincipalTecnico extends VerticalLayout {
             public void menuSelected(MenuItem selectedItem) {
                 content.removeAllComponents();
                 
-                LayoutProfessores l = new LayoutProfessores();
+                LayoutProfessores l = new LayoutProfessores(content);
                 content.addComponent(l);
             }
         });
@@ -189,7 +189,7 @@ public class LayoutPrincipalTecnico extends VerticalLayout {
             public void menuSelected(MenuItem selectedItem) {
                 content.removeAllComponents();
                 
-                LayoutCadastroProfessores l = new LayoutCadastroProfessores(LayoutCadastroProfessores.Operacao.INCLUIR);
+                LayoutCadastroProfessores l = new LayoutCadastroProfessores(LayoutCadastroProfessores.Operacao.INCLUIR, content);
                 content.addComponent(l);
             }
         });

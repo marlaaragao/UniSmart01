@@ -37,8 +37,12 @@ public class LayoutTurmas extends VerticalLayout {
     private Button btnAlterar;
     private Button btnNovo;
     private TextField search;
+    private VerticalLayout content;
     
-    public LayoutTurmas() {
+    public LayoutTurmas(VerticalLayout content) {
+        
+        this.content = content;
+        
         setImmediate(true);
         setSpacing(true);
         setMargin(true);
@@ -83,10 +87,11 @@ public class LayoutTurmas extends VerticalLayout {
                     
                     Turma turma = (Turma) rowId;
                     
-                    LayoutCadastroTurmas l = new LayoutCadastroTurmas(LayoutCadastroTurmas.Operacao.ALTERAR);
+                    LayoutCadastroTurmas l = new LayoutCadastroTurmas(LayoutCadastroTurmas.Operacao.ALTERAR, content);
                     l.loadDados(turma);
                     
-                    UI.getCurrent().setContent(l);
+                    content.removeAllComponents();
+                    content.addComponent(l);
                 }
             }
         });
@@ -99,8 +104,9 @@ public class LayoutTurmas extends VerticalLayout {
 
             @Override
             public void buttonClick(Button.ClickEvent event) {
-                LayoutCadastroTurmas l = new LayoutCadastroTurmas(LayoutCadastroTurmas.Operacao.INCLUIR);
-                UI.getCurrent().setContent(l);
+                LayoutCadastroTurmas l = new LayoutCadastroTurmas(LayoutCadastroTurmas.Operacao.INCLUIR, content);
+                content.removeAllComponents();
+                content.addComponent(l);
             }
         });
         
@@ -152,7 +158,7 @@ public class LayoutTurmas extends VerticalLayout {
         tabela_.addContainerProperty("Disciplina", String.class, null);
         tabela_.addContainerProperty("Professor", String.class, null);
         tabela_.addContainerProperty("MaxAlunos", Integer.class, null);
-        tabela_.addContainerProperty("DiasSemana", Integer.class, null);
+        tabela_.addContainerProperty("DiasSemana", String.class, null);
         tabela_.addContainerProperty("Periodo", String.class, null);
         tabela_.addContainerProperty("Horario", Integer.class, null);
         tabela_.addContainerProperty("Ativa", String.class, null);

@@ -36,8 +36,12 @@ public class LayoutAtuacao extends VerticalLayout {
     private Button btnAlterar;
     private Button btnNovo;
     private TextField search;
+    private VerticalLayout content;
     
-    public LayoutAtuacao() {
+    public LayoutAtuacao(VerticalLayout content) {
+        
+        this.content = content;
+        
         setImmediate(true);
         setSpacing(true);
         setMargin(true);
@@ -82,10 +86,11 @@ public class LayoutAtuacao extends VerticalLayout {
                     
                     Atuacao atuacao = (Atuacao) rowId;
                     
-                    LayoutCadastroAtuacao l = new LayoutCadastroAtuacao(LayoutCadastroAtuacao.Operacao.ALTERAR);
+                    LayoutCadastroAtuacao l = new LayoutCadastroAtuacao(LayoutCadastroAtuacao.Operacao.ALTERAR, content);
                     l.loadDados(atuacao);
                     
-                    UI.getCurrent().setContent(l);
+                    content.removeAllComponents();
+                    content.addComponent(l);
                 }
             }
         });
@@ -98,8 +103,10 @@ public class LayoutAtuacao extends VerticalLayout {
 
             @Override
             public void buttonClick(Button.ClickEvent event) {
-                LayoutCadastroAtuacao l = new LayoutCadastroAtuacao(LayoutCadastroAtuacao.Operacao.INCLUIR);
-                UI.getCurrent().setContent(l);
+                LayoutCadastroAtuacao l = new LayoutCadastroAtuacao(LayoutCadastroAtuacao.Operacao.INCLUIR, content);
+                
+                content.removeAllComponents();
+                content.addComponent(l);
             }
         });
         

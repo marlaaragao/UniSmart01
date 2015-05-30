@@ -88,7 +88,7 @@ public class AtuacaoDao {
     
     private int getProximoCodigo() throws SQLException {
         PreparedStatement ps = DBConnection.getInstance().prepareStatement("Select max(id) as maximo "
-                + " from area ");
+                + " from atuacao ");
 
         ResultSet rs = ps.executeQuery();
         

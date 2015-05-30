@@ -24,15 +24,15 @@ public class TurmaDao {
         turma.setId(getProximoCodigo());
         
         PreparedStatement ps = DBConnection.getInstance().prepareStatement
-        ("insert into turma (id, descricao, max_alunos, professor, dias_semana, professor, periodo, horario, ativa) "
+        ("insert into turma (id, descricao, max_alunos, professor, disciplina, dias_semana, periodo, horario, ativa) "
                 + "values (?, ?, ?, ?, ?, ?, ?, ?, ?)");
         
         ps.setInt(1, getProximoCodigo());
         ps.setString(2, turma.getDescricao());
         ps.setInt(3, turma.getMax_alunos());
         ps.setInt(4, turma.getProfessor());
-        ps.setString(5, turma.getDias_semana());
-        ps.setInt(6, turma.getProfessor());
+        ps.setInt(5, turma.getDisciplina());
+        ps.setString(6, turma.getDias_semana());
         ps.setString(7, turma.getPeriodo());
         ps.setInt(8, turma.getHorario());
         ps.setInt(9, turma.isAtiva() ? 1 : 0);
@@ -133,8 +133,8 @@ public class TurmaDao {
             ps.setString(5, turma.getDias_semana());
             ps.setString(6, turma.getPeriodo());
             ps.setInt(7, turma.getHorario());
-            ps.setInt(8, turma.getId());
             ps.setInt(9, turma.isAtiva() ? 1 : 0);
+            ps.setInt(8, turma.getId());       
             
             ps.execute();
 

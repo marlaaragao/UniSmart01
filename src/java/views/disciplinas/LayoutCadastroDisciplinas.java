@@ -38,10 +38,12 @@ public class LayoutCadastroDisciplinas extends VerticalLayout {
     private TextField ano;
     private CheckBox ativa;
     private ComboBox atuacao;
+    private VerticalLayout content;
 
-    public LayoutCadastroDisciplinas(Operacao operacao) {
+    public LayoutCadastroDisciplinas(Operacao operacao, VerticalLayout content) {
         
         this.operacao = operacao;
+        this.content = content;
         
         setImmediate(true);
         setSpacing(true);
@@ -117,8 +119,9 @@ public class LayoutCadastroDisciplinas extends VerticalLayout {
 
             @Override
             public void buttonClick(Button.ClickEvent event) {
-                LayoutPrincipalTecnico l = new LayoutPrincipalTecnico();
-                UI.getCurrent().setContent(l);
+                LayoutDisciplinas l = new LayoutDisciplinas(content);
+                content.removeAllComponents();
+                content.addComponent(l);
             }
         });
         

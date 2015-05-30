@@ -41,7 +41,7 @@ public class DisciplinaDao {
         PreparedStatement ps;
         try {
             ps = DBConnection.getInstance().prepareStatement
-                ("Select * from Disciplinas where id = ?");
+                ("Select * from Disciplina where id = ?");
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
         
