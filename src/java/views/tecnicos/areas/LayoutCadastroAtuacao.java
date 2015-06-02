@@ -4,41 +4,34 @@
  * and open the template in the editor.
  */
 
-package views.professores;
+package views.tecnicos.areas;
 
-import com.vaadin.server.VaadinSession;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Button;
-import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.TextField;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import entidade.Atuacao;
-import entidade.Professor;
-import java.util.Collection;
 import persistencia.AtuacaoDao;
-import persistencia.ProfessorDao;
 import views.LayoutPrincipalTecnico;
 
 /**
  *
  * @author Marla Aragão
  */
-public class LayoutCadastroProfessores extends VerticalLayout {
+public class LayoutCadastroAtuacao extends VerticalLayout {
 
     private TextField id;
-    private TextField nome;
+    private TextField descricao;
     private Button btnSalvar;
     private Button btnVoltar;
     private Operacao operacao;
-    private TextField ano;
-    private TextField cpf;
-    private ComboBox atuacao;
     private VerticalLayout content;
 
-    public LayoutCadastroProfessores(Operacao operacao, VerticalLayout content) {
+    public LayoutCadastroAtuacao(Operacao operacao, VerticalLayout content) {
         
         this.operacao = operacao;
         this.content = content;
@@ -47,7 +40,7 @@ public class LayoutCadastroProfessores extends VerticalLayout {
         setSpacing(true);
         setMargin(true);
         
-        Label label = new Label("<font size=\"2\" color=\"#287ece\"><b>Cadastro Professor</b></font>"
+        Label label = new Label("<font size=\"2\" color=\"#287ece\"><b>Cadastro Área</b></font>"
         , ContentMode.HTML);
         
         addComponent(label);
@@ -63,34 +56,13 @@ public class LayoutCadastroProfessores extends VerticalLayout {
         id.setImmediate(true);
         id.setEnabled(false);
         
-        nome = new TextField("Descricao:");
-        nome.setWidth("60%");
-        nome.setImmediate(true);
+        descricao = new TextField("Descricao:");
+        descricao.setWidth("60%");
+        descricao.setImmediate(true);
         
-        Collection<Atuacao> atuacoes = new AtuacaoDao().selectAll();
-        
-        atuacao = new ComboBox("Áreas de atuação:");
-        atuacao.setWidth("30%");
-        atuacao.setImmediate(true);
-        atuacao.setNullSelectionAllowed(false);
-        atuacao.setTextInputAllowed(false);
-        atuacao.setInputPrompt("Selecione");
-        
-        for (Atuacao a : atuacoes) {
-            atuacao.addItem(a.getId());
-            atuacao.setItemCaption(a.getId(), a.getDescricao());
-        }
-        
-        atuacao.select(atuacao.getItemIds().iterator().next());
-        
-        cpf = new TextField("Cpf");
-        cpf.setWidth("60%");
-        cpf.setImmediate(true);
         
         this.addComponent(id);
-        this.addComponent(nome);
-        this.addComponent(cpf);
-        this.addComponent(atuacao);
+        this.addComponent(descricao);
         
         HorizontalLayout hLayout = new HorizontalLayout();
         hLayout.setImmediate(true);
@@ -112,7 +84,7 @@ public class LayoutCadastroProfessores extends VerticalLayout {
 
             @Override
             public void buttonClick(Button.ClickEvent event) {
-                LayoutProfessores l = new LayoutProfessores(content);
+                views.tecnicos.areas.LayoutAtuacao l = new views.tecnicos.areas.LayoutAtuacao(content);
                 content.removeAllComponents();
                 content.addComponent(l);
             }
@@ -125,22 +97,20 @@ public class LayoutCadastroProfessores extends VerticalLayout {
         
     }
     
-    public void loadDados(Professor p) {
+    public void loadDados(Atuacao p) {
         if (p == null) {
             return;
         }
         
         id.setValue(String.valueOf(p.getId()));
-        nome.setValue(p.getNome());
-        atuacao.setValue(p.getAtuacao());
-        cpf.setValue(p.getCpf());
+        descricao.setValue(p.getDescricao());
     }
     
     private void salvarDados() {
         
         try {
             
-            Professor professor = new Professor();
+            Atuacao atuacao = new Atuacao();
             
             int codigoP = -1;
             
@@ -150,17 +120,14 @@ public class LayoutCadastroProfessores extends VerticalLayout {
 //                Notification.show("", null, Notification.Type.ERROR_MESSAGE);
             }
             
-            professor.setId(codigoP);
-            professor.setNome(nome.getValue());
-            
-            professor.setAtuacao((int) atuacao.getValue());
-            professor.setCpf(cpf.getValue());
-            
+            atuacao.setId(codigoP);
+            atuacao.setDescricao(descricao.getValue());
+
             if (operacao.equals(Operacao.ALTERAR)) {
-                new ProfessorDao().update(professor);
+                new AtuacaoDao().update(atuacao);
                 
             } else {
-                new ProfessorDao().insert(professor);
+                new AtuacaoDao().insert(atuacao);
             }
             
             Notification.show("", "Dados gravados com sucesso", Notification.Type.HUMANIZED_MESSAGE);

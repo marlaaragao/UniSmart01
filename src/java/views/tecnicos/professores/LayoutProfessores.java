@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package views.professores;
+package views.tecnicos.professores;
 
 import com.vaadin.data.Container;
 import com.vaadin.data.Container.Filter;

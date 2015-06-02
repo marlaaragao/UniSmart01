@@ -15,14 +15,14 @@ import com.vaadin.ui.MenuBar.Command;
 import com.vaadin.ui.MenuBar.MenuItem;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.Reindeer;
-import views.areas.LayoutCadastroAtuacao;
-import views.atuacaos.LayoutAtuacao;
-import views.disciplinas.LayoutCadastroDisciplinas;
-import views.disciplinas.LayoutDisciplinas;
-import views.professores.LayoutCadastroProfessores;
-import views.professores.LayoutProfessores;
-import views.turmas.LayoutCadastroTurmas;
-import views.turmas.LayoutTurmas;
+import views.tecnicos.areas.LayoutCadastroAtuacao;
+import views.tecnicos.areas.LayoutAtuacao;
+import views.tecnicos.disciplinas.LayoutCadastroDisciplinas;
+import views.tecnicos.disciplinas.LayoutDisciplinas;
+import views.tecnicos.professores.LayoutCadastroProfessores;
+import views.tecnicos.professores.LayoutProfessores;
+import views.tecnicos.turmas.LayoutCadastroTurmas;
+import views.tecnicos.turmas.LayoutTurmas;
 
 /**
  *

@@ -4,10 +4,13 @@
  * and open the template in the editor.
  */
 
-package views.areas;
+package views.tecnicos.disciplinas;
 
+import com.vaadin.server.UserError;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.CheckBox;
+import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
@@ -15,23 +18,30 @@ import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import entidade.Atuacao;
+import entidade.Disciplina;
+import java.util.Collection;
 import persistencia.AtuacaoDao;
+import persistencia.DisciplinaDao;
 import views.LayoutPrincipalTecnico;
+import views.tecnicos.disciplinas.LayoutDisciplinas;
 
 /**
  *
  * @author Marla Aragão
  */
-public class LayoutCadastroAtuacao extends VerticalLayout {
+public class LayoutCadastroDisciplinas extends VerticalLayout {
 
     private TextField id;
     private TextField descricao;
     private Button btnSalvar;
     private Button btnVoltar;
     private Operacao operacao;
+    private TextField ano;
+    private CheckBox ativa;
+    private ComboBox atuacao;
     private VerticalLayout content;
 
-    public LayoutCadastroAtuacao(Operacao operacao, VerticalLayout content) {
+    public LayoutCadastroDisciplinas(Operacao operacao, VerticalLayout content) {
         
         this.operacao = operacao;
         this.content = content;
@@ -40,7 +50,7 @@ public class LayoutCadastroAtuacao extends VerticalLayout {
         setSpacing(true);
         setMargin(true);
         
-        Label label = new Label("<font size=\"2\" color=\"#287ece\"><b>Cadastro Área</b></font>"
+        Label label = new Label("<font size=\"2\" color=\"#287ece\"><b>Cadastro Disciplina</b></font>"
         , ContentMode.HTML);
         
         addComponent(label);
@@ -60,9 +70,35 @@ public class LayoutCadastroAtuacao extends VerticalLayout {
         descricao.setWidth("60%");
         descricao.setImmediate(true);
         
+        ano = new TextField("Ano:");
+        ano.setWidth("60%");
+        ano.setImmediate(true);
+        
+        Collection<Atuacao> atuacoes = new AtuacaoDao().selectAll();
+        
+        atuacao = new ComboBox("Áreas de atuação:");
+        atuacao.setWidth("30%");
+        atuacao.setImmediate(true);
+        atuacao.setNullSelectionAllowed(false);
+        atuacao.setTextInputAllowed(false);
+        atuacao.setInputPrompt("Selecione");
+        
+        for (Atuacao a : atuacoes) {
+            atuacao.addItem(a.getId());
+            atuacao.setItemCaption(a.getId(), a.getDescricao());
+        }
+        
+        atuacao.select(atuacao.getItemIds().iterator().next());
+        
+        ativa = new CheckBox("Ativa", true);
+        ativa.setWidth("60%");
+        ativa.setImmediate(true);
         
         this.addComponent(id);
         this.addComponent(descricao);
+        this.addComponent(ano);
+        this.addComponent(atuacao);
+        this.addComponent(ativa);
         
         HorizontalLayout hLayout = new HorizontalLayout();
         hLayout.setImmediate(true);
@@ -84,7 +120,7 @@ public class LayoutCadastroAtuacao extends VerticalLayout {
 
             @Override
             public void buttonClick(Button.ClickEvent event) {
-                views.atuacaos.LayoutAtuacao l = new views.atuacaos.LayoutAtuacao(content);
+                LayoutDisciplinas l = new LayoutDisciplinas(content);
                 content.removeAllComponents();
                 content.addComponent(l);
             }
@@ -97,20 +133,23 @@ public class LayoutCadastroAtuacao extends VerticalLayout {
         
     }
     
-    public void loadDados(Atuacao p) {
+    public void loadDados(Disciplina p) {
         if (p == null) {
             return;
         }
         
         id.setValue(String.valueOf(p.getId()));
         descricao.setValue(p.getDescricao());
+        ano.setValue(String.valueOf(p.getAno()));
+        atuacao.setValue(p.getAtuacao());
+        ativa.setValue(p.isAtiva());
     }
     
     private void salvarDados() {
         
         try {
             
-            Atuacao atuacao = new Atuacao();
+            Disciplina disciplina = new Disciplina();
             
             int codigoP = -1;
             
@@ -120,14 +159,24 @@ public class LayoutCadastroAtuacao extends VerticalLayout {
 //                Notification.show("", null, Notification.Type.ERROR_MESSAGE);
             }
             
-            atuacao.setId(codigoP);
-            atuacao.setDescricao(descricao.getValue());
+            disciplina.setId(codigoP);
+            disciplina.setDescricao(descricao.getValue());
+            
+            try {
+                disciplina.setAno(Integer.parseInt(ano.getValue()));
+            } catch (Exception e) {
+                ano.setComponentError(new UserError("Ano inválido."));
+                return;
+            }
+            
+            disciplina.setAtuacao((int) atuacao.getValue());
+            disciplina.setAtiva(ativa.getValue());
 
             if (operacao.equals(Operacao.ALTERAR)) {
-                new AtuacaoDao().update(atuacao);
+                new DisciplinaDao().update(disciplina);
                 
             } else {
-                new AtuacaoDao().insert(atuacao);
+                new DisciplinaDao().insert(disciplina);
             }
             
             Notification.show("", "Dados gravados com sucesso", Notification.Type.HUMANIZED_MESSAGE);

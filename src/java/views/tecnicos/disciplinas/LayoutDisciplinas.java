@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package views.turmas;
+package views.tecnicos.disciplinas;
 
 import com.vaadin.data.Container;
 import com.vaadin.data.Container.Filter;
@@ -19,18 +19,17 @@ import com.vaadin.ui.Table;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
-import entidade.Turma;
+import entidade.Disciplina;
 import java.util.List;
+import persistencia.AtuacaoDao;
 import persistencia.DisciplinaDao;
-import persistencia.ProfessorDao;
-import persistencia.TurmaDao;
 import views.LayoutPrincipalTecnico;
 
 /**
  *
  * @author Marla Aragão
  */
-public class LayoutTurmas extends VerticalLayout {
+public class LayoutDisciplinas extends VerticalLayout {
     
     private Table tabela;
     private Button btnMenuPrincipal;
@@ -39,7 +38,7 @@ public class LayoutTurmas extends VerticalLayout {
     private TextField search;
     private VerticalLayout content;
     
-    public LayoutTurmas(VerticalLayout content) {
+    public LayoutDisciplinas(VerticalLayout content) {
         
         this.content = content;
         
@@ -47,7 +46,7 @@ public class LayoutTurmas extends VerticalLayout {
         setSpacing(true);
         setMargin(true);
 
-        Label label = new Label("<font size=\"2\" color=\"#287ece\"><b>Turmas</b></font>"
+        Label label = new Label("<font size=\"2\" color=\"#287ece\"><b>Disciplinas</b></font>"
         , ContentMode.HTML);
         
         addComponent(label);
@@ -82,31 +81,29 @@ public class LayoutTurmas extends VerticalLayout {
             public void buttonClick(Button.ClickEvent event) {
                 Object rowId = tabela.getValue();
                 if (rowId == null) {
-                    Notification.show("", "Escolha um turma para alterar", Notification.Type.WARNING_MESSAGE);
+                    Notification.show("", "Escolha um disciplina para alterar", Notification.Type.WARNING_MESSAGE);
                 } else {
                     
-                    Turma turma = (Turma) rowId;
+                    Disciplina disciplina = (Disciplina) rowId;
                     
-                    LayoutCadastroTurmas l = new LayoutCadastroTurmas(LayoutCadastroTurmas.Operacao.ALTERAR, content);
-                    l.loadDados(turma);
+                    LayoutCadastroDisciplinas l = new LayoutCadastroDisciplinas(LayoutCadastroDisciplinas.Operacao.ALTERAR, content);
+                    l.loadDados(disciplina);
                     
-                    content.removeAllComponents();
-                    content.addComponent(l);
+                    UI.getCurrent().setContent(l);
                 }
             }
         });
         
         hLayout.addComponent(btnAlterar);
         
-        btnNovo = new Button("Nova Turma");
+        btnNovo = new Button("Nova Disciplina");
         btnNovo.setImmediate(true);
         btnNovo.addClickListener(new Button.ClickListener() {
 
             @Override
             public void buttonClick(Button.ClickEvent event) {
-                LayoutCadastroTurmas l = new LayoutCadastroTurmas(LayoutCadastroTurmas.Operacao.INCLUIR, content);
-                content.removeAllComponents();
-                content.addComponent(l);
+                LayoutCadastroDisciplinas l = new LayoutCadastroDisciplinas(LayoutCadastroDisciplinas.Operacao.INCLUIR, content);
+                UI.getCurrent().setContent(l);
             }
         });
         
@@ -141,7 +138,7 @@ public class LayoutTurmas extends VerticalLayout {
         this.addComponent(search);
         this.addComponent(tabela);
         
-        carregarTabelaTurmas();
+        carregarTabelaDisciplinas();
         
     }
     
@@ -155,42 +152,32 @@ public class LayoutTurmas extends VerticalLayout {
       
         tabela_.addContainerProperty("Id", Integer.class, null);
         tabela_.addContainerProperty("Descricao", String.class, null);
-        tabela_.addContainerProperty("Disciplina", String.class, null);
-        tabela_.addContainerProperty("Professor", String.class, null);
-        tabela_.addContainerProperty("MaxAlunos", Integer.class, null);
-        tabela_.addContainerProperty("DiasSemana", String.class, null);
-        tabela_.addContainerProperty("Periodo", String.class, null);
-        tabela_.addContainerProperty("Horario", Integer.class, null);
+        tabela_.addContainerProperty("Ano", Integer.class, null);
+        tabela_.addContainerProperty("Area", String.class, null);
         tabela_.addContainerProperty("Ativa", String.class, null);
         
-        tabela_.setColumnHeaders(new String[]{"Id", "Descrição", "Disciplina", "Professor", "Máx. Alunos"
-        , "Dias da Semana", "Período", "Horário", "Ativa"});
+        tabela_.setColumnHeaders(new String[]{"Id", "Descrição", "Ano", "Área", "Ativa"});
         tabela_.setColumnWidth("Codigo", 60);
 
-        tabela_.setVisibleColumns(new Object[]{"Id", "Descricao", "Disciplina", "Professor", "MaxAlunos"
-        , "DiasSemana", "Periodo", "Horario", "Ativa"});
+        tabela_.setVisibleColumns(new Object[]{"Id", "Descricao", "Ano", "Area", "Ativa"});
     
         return tabela_;
     }
     
-    private void carregarTabelaTurmas() {
+    private void carregarTabelaDisciplinas() {
         tabela.removeAllItems();     
         try {
             
-            List<Turma> listaTurmas = null;
+            List<Disciplina> listaDisciplinas = null;
 
-            listaTurmas = new TurmaDao().selectAll();
+            listaDisciplinas = new DisciplinaDao().selectAll();
             
-            for (Turma p : listaTurmas) {
+            for (Disciplina p : listaDisciplinas) {
                 Item item = tabela.addItem(p);
                 item.getItemProperty("Id").setValue(p.getId());
                 item.getItemProperty("Descricao").setValue(p.getDescricao());
-                item.getItemProperty("Disciplina").setValue(new DisciplinaDao().select(p.getDisciplina()).getDescricao());
-                item.getItemProperty("Professor").setValue(new ProfessorDao().select(p.getProfessor()).getNome());
-                item.getItemProperty("DiasSemana").setValue(p.getDias_semana());
-                item.getItemProperty("Periodo").setValue(p.getPeriodo());
-                item.getItemProperty("Horario").setValue(p.getHorario());
-                item.getItemProperty("MaxAlunos").setValue(p.getMax_alunos());
+                item.getItemProperty("Ano").setValue(p.getAno());
+                item.getItemProperty("Area").setValue(new AtuacaoDao().select(p.getAtuacao()).getDescricao());
                 item.getItemProperty("Ativa").setValue(p.isAtiva() ? "Sim" : "Não");
             }
             

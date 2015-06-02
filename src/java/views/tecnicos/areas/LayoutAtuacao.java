@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package views.disciplinas;
+package views.tecnicos.areas;
 
 import com.vaadin.data.Container;
 import com.vaadin.data.Container.Filter;
@@ -19,17 +19,17 @@ import com.vaadin.ui.Table;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
-import entidade.Disciplina;
+import entidade.Atuacao;
 import java.util.List;
 import persistencia.AtuacaoDao;
-import persistencia.DisciplinaDao;
 import views.LayoutPrincipalTecnico;
+import views.tecnicos.areas.LayoutCadastroAtuacao;
 
 /**
  *
  * @author Marla Aragão
  */
-public class LayoutDisciplinas extends VerticalLayout {
+public class LayoutAtuacao extends VerticalLayout {
     
     private Table tabela;
     private Button btnMenuPrincipal;
@@ -38,7 +38,7 @@ public class LayoutDisciplinas extends VerticalLayout {
     private TextField search;
     private VerticalLayout content;
     
-    public LayoutDisciplinas(VerticalLayout content) {
+    public LayoutAtuacao(VerticalLayout content) {
         
         this.content = content;
         
@@ -46,7 +46,7 @@ public class LayoutDisciplinas extends VerticalLayout {
         setSpacing(true);
         setMargin(true);
 
-        Label label = new Label("<font size=\"2\" color=\"#287ece\"><b>Disciplinas</b></font>"
+        Label label = new Label("<font size=\"2\" color=\"#287ece\"><b>Atuação</b></font>"
         , ContentMode.HTML);
         
         addComponent(label);
@@ -81,29 +81,32 @@ public class LayoutDisciplinas extends VerticalLayout {
             public void buttonClick(Button.ClickEvent event) {
                 Object rowId = tabela.getValue();
                 if (rowId == null) {
-                    Notification.show("", "Escolha um disciplina para alterar", Notification.Type.WARNING_MESSAGE);
+                    Notification.show("", "Escolha uma área atuacao para alterar", Notification.Type.WARNING_MESSAGE);
                 } else {
                     
-                    Disciplina disciplina = (Disciplina) rowId;
+                    Atuacao atuacao = (Atuacao) rowId;
                     
-                    LayoutCadastroDisciplinas l = new LayoutCadastroDisciplinas(LayoutCadastroDisciplinas.Operacao.ALTERAR, content);
-                    l.loadDados(disciplina);
+                    LayoutCadastroAtuacao l = new LayoutCadastroAtuacao(LayoutCadastroAtuacao.Operacao.ALTERAR, content);
+                    l.loadDados(atuacao);
                     
-                    UI.getCurrent().setContent(l);
+                    content.removeAllComponents();
+                    content.addComponent(l);
                 }
             }
         });
         
         hLayout.addComponent(btnAlterar);
         
-        btnNovo = new Button("Nova Disciplina");
+        btnNovo = new Button("Nova Atuacao");
         btnNovo.setImmediate(true);
         btnNovo.addClickListener(new Button.ClickListener() {
 
             @Override
             public void buttonClick(Button.ClickEvent event) {
-                LayoutCadastroDisciplinas l = new LayoutCadastroDisciplinas(LayoutCadastroDisciplinas.Operacao.INCLUIR, content);
-                UI.getCurrent().setContent(l);
+                LayoutCadastroAtuacao l = new LayoutCadastroAtuacao(LayoutCadastroAtuacao.Operacao.INCLUIR, content);
+                
+                content.removeAllComponents();
+                content.addComponent(l);
             }
         });
         
@@ -138,7 +141,7 @@ public class LayoutDisciplinas extends VerticalLayout {
         this.addComponent(search);
         this.addComponent(tabela);
         
-        carregarTabelaDisciplinas();
+        carregarTabelaAtuacaos();
         
     }
     
@@ -152,33 +155,28 @@ public class LayoutDisciplinas extends VerticalLayout {
       
         tabela_.addContainerProperty("Id", Integer.class, null);
         tabela_.addContainerProperty("Descricao", String.class, null);
-        tabela_.addContainerProperty("Ano", Integer.class, null);
-        tabela_.addContainerProperty("Area", String.class, null);
-        tabela_.addContainerProperty("Ativa", String.class, null);
-        
-        tabela_.setColumnHeaders(new String[]{"Id", "Descrição", "Ano", "Área", "Ativa"});
+               
+        tabela_.setColumnHeaders(new String[]{"Id", "Descrição"});
         tabela_.setColumnWidth("Codigo", 60);
 
-        tabela_.setVisibleColumns(new Object[]{"Id", "Descricao", "Ano", "Area", "Ativa"});
+        tabela_.setVisibleColumns(new Object[]{"Id", "Descricao"});
     
         return tabela_;
     }
     
-    private void carregarTabelaDisciplinas() {
+    private void carregarTabelaAtuacaos() {
         tabela.removeAllItems();     
         try {
             
-            List<Disciplina> listaDisciplinas = null;
+            List<Atuacao> listaAtuacaos = null;
 
-            listaDisciplinas = new DisciplinaDao().selectAll();
+            listaAtuacaos = new AtuacaoDao().selectAll();
             
-            for (Disciplina p : listaDisciplinas) {
+            for (Atuacao p : listaAtuacaos) {
                 Item item = tabela.addItem(p);
                 item.getItemProperty("Id").setValue(p.getId());
                 item.getItemProperty("Descricao").setValue(p.getDescricao());
-                item.getItemProperty("Ano").setValue(p.getAno());
-                item.getItemProperty("Area").setValue(new AtuacaoDao().select(p.getAtuacao()).getDescricao());
-                item.getItemProperty("Ativa").setValue(p.isAtiva() ? "Sim" : "Não");
+                
             }
             
         } catch (Exception e) {

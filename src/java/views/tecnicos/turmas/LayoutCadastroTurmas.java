@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package views.turmas;
+package views.tecnicos.turmas;
 
 import com.vaadin.data.Property;
 import com.vaadin.server.UserError;

@@ -4,43 +4,41 @@
  * and open the template in the editor.
  */
 
-package views.disciplinas;
+package views.tecnicos.professores;
 
-import com.vaadin.server.UserError;
+import com.vaadin.server.VaadinSession;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Button;
-import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.TextField;
-import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import entidade.Atuacao;
-import entidade.Disciplina;
+import entidade.Professor;
 import java.util.Collection;
 import persistencia.AtuacaoDao;
-import persistencia.DisciplinaDao;
+import persistencia.ProfessorDao;
 import views.LayoutPrincipalTecnico;
 
 /**
  *
  * @author Marla Aragão
  */
-public class LayoutCadastroDisciplinas extends VerticalLayout {
+public class LayoutCadastroProfessores extends VerticalLayout {
 
     private TextField id;
-    private TextField descricao;
+    private TextField nome;
     private Button btnSalvar;
     private Button btnVoltar;
     private Operacao operacao;
     private TextField ano;
-    private CheckBox ativa;
+    private TextField cpf;
     private ComboBox atuacao;
     private VerticalLayout content;
 
-    public LayoutCadastroDisciplinas(Operacao operacao, VerticalLayout content) {
+    public LayoutCadastroProfessores(Operacao operacao, VerticalLayout content) {
         
         this.operacao = operacao;
         this.content = content;
@@ -49,7 +47,7 @@ public class LayoutCadastroDisciplinas extends VerticalLayout {
         setSpacing(true);
         setMargin(true);
         
-        Label label = new Label("<font size=\"2\" color=\"#287ece\"><b>Cadastro Disciplina</b></font>"
+        Label label = new Label("<font size=\"2\" color=\"#287ece\"><b>Cadastro Professor</b></font>"
         , ContentMode.HTML);
         
         addComponent(label);
@@ -65,13 +63,9 @@ public class LayoutCadastroDisciplinas extends VerticalLayout {
         id.setImmediate(true);
         id.setEnabled(false);
         
-        descricao = new TextField("Descricao:");
-        descricao.setWidth("60%");
-        descricao.setImmediate(true);
-        
-        ano = new TextField("Ano:");
-        ano.setWidth("60%");
-        ano.setImmediate(true);
+        nome = new TextField("Descricao:");
+        nome.setWidth("60%");
+        nome.setImmediate(true);
         
         Collection<Atuacao> atuacoes = new AtuacaoDao().selectAll();
         
@@ -89,15 +83,14 @@ public class LayoutCadastroDisciplinas extends VerticalLayout {
         
         atuacao.select(atuacao.getItemIds().iterator().next());
         
-        ativa = new CheckBox("Ativa", true);
-        ativa.setWidth("60%");
-        ativa.setImmediate(true);
+        cpf = new TextField("Cpf");
+        cpf.setWidth("60%");
+        cpf.setImmediate(true);
         
         this.addComponent(id);
-        this.addComponent(descricao);
-        this.addComponent(ano);
+        this.addComponent(nome);
+        this.addComponent(cpf);
         this.addComponent(atuacao);
-        this.addComponent(ativa);
         
         HorizontalLayout hLayout = new HorizontalLayout();
         hLayout.setImmediate(true);
@@ -119,7 +112,7 @@ public class LayoutCadastroDisciplinas extends VerticalLayout {
 
             @Override
             public void buttonClick(Button.ClickEvent event) {
-                LayoutDisciplinas l = new LayoutDisciplinas(content);
+                LayoutProfessores l = new LayoutProfessores(content);
                 content.removeAllComponents();
                 content.addComponent(l);
             }
@@ -132,23 +125,22 @@ public class LayoutCadastroDisciplinas extends VerticalLayout {
         
     }
     
-    public void loadDados(Disciplina p) {
+    public void loadDados(Professor p) {
         if (p == null) {
             return;
         }
         
         id.setValue(String.valueOf(p.getId()));
-        descricao.setValue(p.getDescricao());
-        ano.setValue(String.valueOf(p.getAno()));
+        nome.setValue(p.getNome());
         atuacao.setValue(p.getAtuacao());
-        ativa.setValue(p.isAtiva());
+        cpf.setValue(p.getCpf());
     }
     
     private void salvarDados() {
         
         try {
             
-            Disciplina disciplina = new Disciplina();
+            Professor professor = new Professor();
             
             int codigoP = -1;
             
@@ -158,24 +150,17 @@ public class LayoutCadastroDisciplinas extends VerticalLayout {
 //                Notification.show("", null, Notification.Type.ERROR_MESSAGE);
             }
             
-            disciplina.setId(codigoP);
-            disciplina.setDescricao(descricao.getValue());
+            professor.setId(codigoP);
+            professor.setNome(nome.getValue());
             
-            try {
-                disciplina.setAno(Integer.parseInt(ano.getValue()));
-            } catch (Exception e) {
-                ano.setComponentError(new UserError("Ano inválido."));
-                return;
-            }
+            professor.setAtuacao((int) atuacao.getValue());
+            professor.setCpf(cpf.getValue());
             
-            disciplina.setAtuacao((int) atuacao.getValue());
-            disciplina.setAtiva(ativa.getValue());
-
             if (operacao.equals(Operacao.ALTERAR)) {
-                new DisciplinaDao().update(disciplina);
+                new ProfessorDao().update(professor);
                 
             } else {
-                new DisciplinaDao().insert(disciplina);
+                new ProfessorDao().insert(professor);
             }
             
             Notification.show("", "Dados gravados com sucesso", Notification.Type.HUMANIZED_MESSAGE);
