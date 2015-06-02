@@ -7,8 +7,6 @@
 package views;
 
 import com.vaadin.shared.ui.label.ContentMode;
-import com.vaadin.ui.Button;
-import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.MenuBar;
 import com.vaadin.ui.MenuBar.Command;
@@ -16,11 +14,6 @@ import com.vaadin.ui.MenuBar.MenuItem;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.Reindeer;
 import views.alunos.LayoutInscricaoTurma;
-import views.areas.LayoutCadastroAtuacao;
-import views.atuacaos.LayoutAtuacao;
-import views.disciplinas.LayoutDisciplinas;
-import views.turmas.LayoutCadastroTurmas;
-import views.turmas.LayoutTurmas;
 
 /**
  *
@@ -29,7 +22,6 @@ import views.turmas.LayoutTurmas;
 public class LayoutPrincipalAluno extends VerticalLayout {
     
     private VerticalLayout content;
-    private Button btnDisciplinas;
     private MenuBar menubar = new MenuBar();
     
     public LayoutPrincipalAluno() {
@@ -64,6 +56,8 @@ public class LayoutPrincipalAluno extends VerticalLayout {
     private void init() {
                
         addMenuBar();
+        LayoutInscricaoTurma l = new LayoutInscricaoTurma(content);
+        content.addComponent(l);
     }
 
     public void addMenuBar() {
@@ -84,17 +78,6 @@ public class LayoutPrincipalAluno extends VerticalLayout {
         });
         turmas.addSeparator();
 
-        turmas.addItem("Inscrever-se em Turma", new Command() {
-
-            @Override
-            public void menuSelected(MenuItem selectedItem) {
-                content.removeAllComponents();
-                
-                LayoutCadastroTurmas l = new LayoutCadastroTurmas(LayoutCadastroTurmas.Operacao.INCLUIR, content);
-                content.addComponent(l);
-            }
-        });
-
         /*******************************Areas**********************************/
         final MenuBar.MenuItem areas = menubar.addItem("Minhas Inscrições", null);
         areas.addItem("Mostrar Turmas Inscritas", new Command() {
@@ -103,8 +86,7 @@ public class LayoutPrincipalAluno extends VerticalLayout {
             public void menuSelected(MenuItem selectedItem) {
                 content.removeAllComponents();
                 
-                LayoutAtuacao l = new LayoutAtuacao(content);
-                content.addComponent(l);
+                
             }
         });
         areas.addSeparator();
@@ -115,10 +97,10 @@ public class LayoutPrincipalAluno extends VerticalLayout {
             public void menuSelected(MenuItem selectedItem) {
                 content.removeAllComponents();
                 
-                LayoutCadastroAtuacao l = new LayoutCadastroAtuacao(LayoutCadastroAtuacao.Operacao.INCLUIR, content);
-                content.addComponent(l);
+                
             }
         });
+        areas.addSeparator();
         
         areas.addItem("Inscrever-se em Turma", new Command() {
 
@@ -126,7 +108,7 @@ public class LayoutPrincipalAluno extends VerticalLayout {
             public void menuSelected(MenuItem selectedItem) {
                 content.removeAllComponents();
                 
-                LayoutCadastroAtuacao l = new LayoutCadastroAtuacao(LayoutCadastroAtuacao.Operacao.INCLUIR, content);
+                LayoutInscricaoTurma l = new LayoutInscricaoTurma(content);
                 content.addComponent(l);
             }
         });

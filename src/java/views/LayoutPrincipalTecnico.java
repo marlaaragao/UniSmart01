@@ -86,6 +86,9 @@ public class LayoutPrincipalTecnico extends VerticalLayout {
         hLayout.addComponent(btnDisciplinas);  
         
         addMenuBar();
+        
+        LayoutDisciplinas l = new LayoutDisciplinas(content);
+        content.addComponent(l);
     }
 
     public void addMenuBar() {

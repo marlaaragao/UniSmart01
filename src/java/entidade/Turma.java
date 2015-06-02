@@ -16,6 +16,7 @@ public class Turma {
     private String descricao;
     private int disciplina;
     private int max_alunos;
+    private int alunos_inscritos;
     private int professor;
     private String dias_semana;
     private String periodo;
@@ -25,16 +26,25 @@ public class Turma {
     public Turma() {
     }
 
-    public Turma(int id, String descricao, int disciplina, int max_alunos, int professor, String dias_semana, String periodo, int horario, boolean ativa) {
+    public Turma(int id, String descricao, int disciplina, int max_alunos, int alunos_inscritos, int professor, String dias_semana, String periodo, int horario, boolean ativa) {
         this.id = id;
         this.descricao = descricao;
         this.disciplina = disciplina;
         this.max_alunos = max_alunos;
+        this.alunos_inscritos = alunos_inscritos;
         this.professor = professor;
         this.dias_semana = dias_semana;
         this.periodo = periodo;
         this.horario = horario;
         this.ativa = ativa;
+    }
+
+    public int getAlunos_inscritos() {
+        return alunos_inscritos;
+    }
+
+    public void setAlunos_inscritos(int alunos_inscritos) {
+        this.alunos_inscritos = alunos_inscritos;
     }
 
     public boolean isAtiva() {

@@ -82,8 +82,7 @@ public class LayoutLogin extends VerticalLayout {
                             VaadinSession.getCurrent().setAttribute("usuario", user.getId());
                             break;
                         case 2:
-                            LayoutPrincipalProfessor lp = new LayoutPrincipalProfessor();
-                            UI.getCurrent().setContent(lp);
+                            
                             VaadinSession.getCurrent().setAttribute("aluno", null);
                             {
                                 try {
@@ -92,18 +91,21 @@ public class LayoutLogin extends VerticalLayout {
                                 } catch (SQLException ex) {
                                 }
                             }
+                            LayoutPrincipalProfessor lp = new LayoutPrincipalProfessor();
+                            UI.getCurrent().setContent(lp);
                             break;
                         case 3:
-                            LayoutPrincipalAluno la = new LayoutPrincipalAluno();
-                            UI.getCurrent().setContent(la);
                             VaadinSession.getCurrent().setAttribute("professor", null);
                             {
                                 try {
                                     VaadinSession.getCurrent().setAttribute("aluno", new AlunoDao().selectByUser(user.getId()).getId());
                                     VaadinSession.getCurrent().setAttribute("usuario", user.getId());
                                 } catch (SQLException ex) {
+                                    ex.printStackTrace();
                                 }
                             }
+                            LayoutPrincipalAluno la = new LayoutPrincipalAluno();
+                            UI.getCurrent().setContent(la);
                             break;
                     }
                 } else {

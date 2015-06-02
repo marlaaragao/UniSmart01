@@ -191,7 +191,8 @@ public class CreateTables {
                     + "    disciplina int not null,"
                     + "    professor int not null,"
                     + "    max_alunos int not null,"
-                    + "    dias_semana varchar(18) not null, /*SegTerQuaQuiSexSab*/"
+                    + "    alunos_inscritos int not null,"
+                    + "    dias_semana varchar(30) not null, /*SegTerQuaQuiSexSab*/"
                     + "    periodo varchar(6) not null, /*M V N*/"
                     + "    horario int not null,  /*1 2 3 4 5*/ "
                     + "    ativa bit not null,  "
@@ -206,6 +207,9 @@ public class CreateTables {
             stmt.execute();
             stmt.close();
             System.out.println("Tabela turma criada com sucesso!");
+            
+            insertTableTurma();
+            
         } catch (SQLException e) {
              if (DerbyUtils.tableAlreadyExists(e)) { //check if the exception is because of pre-existing table.
                  System.out.println("Tabelas ja existem");
@@ -512,5 +516,38 @@ public class CreateTables {
             }
         }
     }
-
+    
+    private void insertTableTurma() throws SQLException {
+        
+        String sql1 = "INSERT INTO unismart.turma (id, descricao, disciplina, professor, max_alunos, alunos_inscritos, dias_semana, periodo, horario, ativa) \n" +
+"	VALUES (1, 'Teste 1', 2, 2, 34, 0, '[Seg, Ter]', 'N', 1234, true);";
+        
+        String sql2 = "INSERT INTO unismart.turma (id, descricao, disciplina, professor, max_alunos, alunos_inscritos, dias_semana, periodo, horario, ativa) \n" +
+"	VALUES (2, 'Teste2', 1, 1, 35, 0, '[Qua, Qui]', 'M', 1234, true);";
+        
+        String sql3 = "INSERT INTO unismart.turma (id, descricao, disciplina, professor, max_alunos, alunos_inscritos, dias_semana, periodo, horario, ativa) \n" +
+"	VALUES (3, 'Teste3', 3, 3, 46, 0, '[Qua, Sex]', 'V', 45, true);";
+        
+        try {
+            PreparedStatement stmt = connection.prepareStatement(sql1);
+            stmt.execute();
+            stmt.close();
+            
+            stmt = connection.prepareStatement(sql2);
+            stmt.execute();
+            stmt.close();
+            
+            stmt = connection.prepareStatement(sql3);
+            stmt.execute();
+            stmt.close();
+            
+            System.out.println("Dados de turmas inseridos com sucesso!");
+        } catch (SQLException e) {
+             if (DerbyUtils.tableAlreadyExists(e)) { //check if the exception is because of pre-existing table.
+                 System.out.println("");
+            } else {
+                 System.out.println(e.getMessage());
+            }
+        }
+    }
 }

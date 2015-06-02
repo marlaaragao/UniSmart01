@@ -24,8 +24,8 @@ public class TurmaDao {
         turma.setId(getProximoCodigo());
         
         PreparedStatement ps = DBConnection.getInstance().prepareStatement
-        ("insert into turma (id, descricao, max_alunos, professor, disciplina, dias_semana, periodo, horario, ativa) "
-                + "values (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        ("insert into turma (id, descricao, max_alunos, professor, disciplina, dias_semana, periodo, horario, ativa, alunos_inscritos) "
+                + "values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
         
         ps.setInt(1, getProximoCodigo());
         ps.setString(2, turma.getDescricao());
@@ -36,7 +36,8 @@ public class TurmaDao {
         ps.setString(7, turma.getPeriodo());
         ps.setInt(8, turma.getHorario());
         ps.setInt(9, turma.isAtiva() ? 1 : 0);
-
+        ps.setInt(10, turma.getAlunos_inscritos());
+        
         ps.execute();
     }
 
@@ -45,7 +46,7 @@ public class TurmaDao {
         
         Turma turma = null;
         PreparedStatement ps = DBConnection.getInstance().prepareStatement
-            ("Select * from Turmas where id = ?");
+            ("Select * from Turma where id = ?");
         ps.setInt(1, id);
         
         ResultSet rs = ps.executeQuery();
@@ -61,6 +62,7 @@ public class TurmaDao {
             turma.setPeriodo(rs.getString("periodo"));
             turma.setHorario(rs.getInt("horario"));
             turma.setAtiva((rs.getInt("ativa") == 1));
+            turma.setAlunos_inscritos(rs.getInt("alunos_inscritos"));
 
         }
         return turma;
@@ -95,6 +97,7 @@ public class TurmaDao {
             turma.setPeriodo(rs.getString("periodo"));
             turma.setHorario(rs.getInt("horario"));
             turma.setAtiva((rs.getInt("ativa") == 1));
+            turma.setAlunos_inscritos(rs.getInt("alunos_inscritos"));
 
             listaTurmas.add(turma);
         }
@@ -133,7 +136,7 @@ public class TurmaDao {
         try {
             ps = DBConnection.getInstance().prepareStatement("Update turma set "
                     + "descricao = ?, max_alunos = ?, disciplina = ?, professor = ?, dias_semana = ?"
-                    + ", periodo = ?, , horario = ?, ativa = ? where id = ?");
+                    + ", periodo = ?, horario = ?, ativa = ?, alunos_inscritos = ? where id = ?");
 
             ps.setString(1, turma.getDescricao());
             ps.setInt(2, turma.getMax_alunos());
@@ -142,8 +145,9 @@ public class TurmaDao {
             ps.setString(5, turma.getDias_semana());
             ps.setString(6, turma.getPeriodo());
             ps.setInt(7, turma.getHorario());
-            ps.setInt(9, turma.isAtiva() ? 1 : 0);
-            ps.setInt(8, turma.getId());       
+            ps.setInt(8, turma.isAtiva() ? 1 : 0);
+            ps.setInt(9, turma.getAlunos_inscritos());
+            ps.setInt(10, turma.getId());       
             
             ps.execute();
 
