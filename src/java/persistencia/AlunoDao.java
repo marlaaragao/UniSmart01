@@ -8,6 +8,7 @@ package persistencia;
 
 import conexao.DBConnection;
 import entidade.Aluno;
+import entidade.Usuario;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -25,15 +26,24 @@ public class AlunoDao {
         aluno.setId(getProximoCodigo());
         
         PreparedStatement ps = DBConnection.getInstance().prepareStatement
-         ("insert into aluno (id, nome, cpf, matricula, curso) "
-                + "values (?, ?, ?, ?, ?)");
+         ("insert into aluno (id, nome, cpf, matricula, curso, usuario) "
+                + "values (?, ?, ?, ?, ?, ?)");
         
         ps.setInt(1, aluno.getId());
         ps.setString(2, aluno.getNome());
         ps.setString(3, aluno.getCpf());
         ps.setInt(4, aluno.getMatricula());
         ps.setInt(5, aluno.getCurso());
-        ps.execute();
+        ps.setInt(6, 0);
+        
+        ps.executeUpdate();
+        
+        UsuarioDao dao = new UsuarioDao();
+        int usuario = dao.insert(new Usuario(dao.getProximoCodigo()
+                , aluno.getNome() + aluno.getCpf().substring(0, 5), aluno.getCpf(), 3));
+        
+        aluno.setUsuario(usuario);
+        this.update(aluno);
     }
 
     public void delete(Aluno aluno) throws SQLException {
@@ -46,12 +56,13 @@ public class AlunoDao {
 
     public void update(Aluno aluno) throws SQLException {
         PreparedStatement ps = DBConnection.getInstance().prepareStatement("Update aluno set "
-                + "nome = ?, cpf = ?, matricula = ?, curso = ? where id = ?");
+                + "nome = ?, cpf = ?, matricula = ?, curso = ?, usuario = ? where id = ?");
         ps.setString(1, aluno.getNome());
         ps.setString(2, aluno.getCpf());
         ps.setInt(3, aluno.getMatricula());
         ps.setInt(4, aluno.getCurso());
-        ps.setInt(5, aluno.getId());
+        ps.setInt(5, aluno.getUsuario());
+        ps.setInt(6, aluno.getId());
         ps.execute();
 
     }
@@ -71,6 +82,7 @@ public class AlunoDao {
             aluno.setNome(rs.getString("nome"));
             aluno.setMatricula(rs.getInt("matricula"));
             aluno.setCurso(rs.getInt("curso"));
+            aluno.setUsuario(rs.getInt("usuario"));
             listaAlunos.add(aluno);
         }
         return listaAlunos;
@@ -93,6 +105,7 @@ public class AlunoDao {
             aluno.setNome(rs.getString("nome"));
             aluno.setMatricula(rs.getInt("matricula"));
             aluno.setCurso(rs.getInt("curso"));
+            aluno.setUsuario(rs.getInt("usuario"));
             listaAlunos.add(aluno);
         }
         return listaAlunos;
@@ -111,6 +124,24 @@ public class AlunoDao {
             aluno.setNome(rs.getString("nome"));
             aluno.setMatricula(rs.getInt("matricula"));
             aluno.setCurso(rs.getInt("curso"));
+            aluno.setUsuario(rs.getInt("usuario"));
+        }
+        return aluno;
+    }
+    
+    public Aluno selectByUser(int usuario) throws SQLException {
+        PreparedStatement ps = DBConnection.getInstance().prepareStatement("Select * from aluno where usuario = ?");
+        ps.setInt(1, usuario);
+        ResultSet rs = ps.executeQuery();
+        Aluno aluno = null;
+        if(rs.next()){
+            aluno = new Aluno();
+            aluno.setId(rs.getInt("id"));
+            aluno.setCpf(rs.getString("cpf"));
+            aluno.setNome(rs.getString("nome"));
+            aluno.setMatricula(rs.getInt("matricula"));
+            aluno.setCurso(rs.getInt("curso"));
+            aluno.setUsuario(rs.getInt("usuario"));
         }
         return aluno;
     }

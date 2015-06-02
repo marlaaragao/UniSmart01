@@ -66,9 +66,19 @@ public class DisciplinaDao {
     }
 
     public List<Disciplina> selectAll() {
-        List<Disciplina> listaDisciplinas = new ArrayList<>();
+        return selectAll(null);
+    }
+    
+        
+    public List<Disciplina> selectAll(String filtro) {
         
         String sql = "Select * from disciplina ";
+        
+        if (filtro != null && filtro.trim() != "") {
+            sql += " where " + filtro;
+        }
+        
+        List<Disciplina> listaDisciplinas = new ArrayList<>();
         
         PreparedStatement ps;
         try {

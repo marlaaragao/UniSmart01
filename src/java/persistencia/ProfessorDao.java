@@ -8,9 +8,11 @@ package persistencia;
 
 import conexao.DBConnection;
 import entidade.Professor;
+import entidade.Usuario;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,20 +22,28 @@ import java.util.List;
  */
 public class ProfessorDao {
     public void insert(Professor professor) throws SQLException {
-        
+
         professor.setId(getProximoCodigo());
         
         PreparedStatement ps = DBConnection.getInstance().prepareStatement
-        ("insert into professor (id, nome, cpf, atuacao) "
-                + "values (?, ?, ?, ?)");
+        ("insert into professor (id, nome, cpf, atuacao, usuario) "
+                + "values (?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
         
-        ps.setInt(1, getProximoCodigo());
+        ps.setInt(1, professor.getId());
         ps.setString(2, professor.getNome());
         ps.setString(3, professor.getCpf());
         ps.setInt(4, professor.getAtuacao());
-
-
-        ps.execute();
+        ps.setInt(5, 0);
+        
+        ps.executeUpdate();
+        
+        UsuarioDao dao = new UsuarioDao();
+        int usuario = dao.insert(new Usuario(dao.getProximoCodigo()
+                , professor.getNome() + professor.getCpf().substring(0, 4), professor.getCpf(), 2));
+        
+        professor.setUsuario(usuario);
+        this.update(professor);
+        
     }
 
 
@@ -52,7 +62,28 @@ public class ProfessorDao {
             professor.setNome(rs.getString("nome"));
             professor.setCpf(rs.getString("cpf"));
             professor.setAtuacao(rs.getInt("atuacao"));
+            professor.setUsuario(rs.getInt("usuario"));
+        }
+        return professor;
 
+    }
+    
+    public Professor selectByUser(int usuario) throws SQLException {
+
+        Professor professor = null;
+        PreparedStatement ps = DBConnection.getInstance().prepareStatement
+        ("Select * from Professor where usuario = ?");
+        ps.setInt(1, usuario);
+        
+        ResultSet rs = ps.executeQuery();
+        
+        if (rs.next()) {
+            professor = new Professor();
+            professor.setId(rs.getInt("id"));
+            professor.setNome(rs.getString("nome"));
+            professor.setCpf(rs.getString("cpf"));
+            professor.setAtuacao(rs.getInt("atuacao"));
+            professor.setUsuario(rs.getInt("usuario"));
         }
         return professor;
 
@@ -72,6 +103,7 @@ public class ProfessorDao {
             professor.setNome(rs.getString("nome"));
             professor.setCpf(rs.getString("cpf"));
             professor.setAtuacao(rs.getInt("atuacao"));
+            professor.setUsuario(rs.getInt("usuario"));
 
             listaProfessors.add(professor);
         }
@@ -96,12 +128,13 @@ public class ProfessorDao {
         PreparedStatement ps;
         try {
             ps = DBConnection.getInstance().prepareStatement("Update professor set "
-                    + "nome = ?, cpf = ?, atuacao = ?, where id = ?");
+                    + "nome = ?, cpf = ?, atuacao = ?, usuario = ? where id = ?");
 
             ps.setString(1, professor.getNome());
             ps.setString(2, professor.getCpf());
-            ps.setInt(4, professor.getAtuacao());
-            ps.setInt(4, professor.getId());
+            ps.setInt(3, professor.getAtuacao());
+            ps.setInt(4, professor.getUsuario());
+            ps.setInt(5, professor.getId());
             ps.execute();
 
         } catch (SQLException ex) {

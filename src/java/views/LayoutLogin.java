@@ -9,6 +9,7 @@ package views;
 import com.vaadin.event.ShortcutAction;
 import com.vaadin.event.ShortcutListener;
 import com.vaadin.server.UserError;
+import com.vaadin.server.VaadinSession;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Label;
@@ -18,6 +19,8 @@ import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import entidade.Usuario;
 import java.sql.SQLException;
+import persistencia.AlunoDao;
+import persistencia.ProfessorDao;
 import persistencia.UsuarioDao;
 
 /**
@@ -76,14 +79,31 @@ public class LayoutLogin extends VerticalLayout {
                         case 1:
                             LayoutPrincipalTecnico lt = new LayoutPrincipalTecnico();
                             UI.getCurrent().setContent(lt);
+                            VaadinSession.getCurrent().setAttribute("usuario", user.getId());
                             break;
                         case 2:
                             LayoutPrincipalProfessor lp = new LayoutPrincipalProfessor();
                             UI.getCurrent().setContent(lp);
+                            VaadinSession.getCurrent().setAttribute("aluno", null);
+                            {
+                                try {
+                                    VaadinSession.getCurrent().setAttribute("professor", new ProfessorDao().selectByUser(user.getId()).getId());
+                                    VaadinSession.getCurrent().setAttribute("usuario", user.getId());
+                                } catch (SQLException ex) {
+                                }
+                            }
                             break;
                         case 3:
                             LayoutPrincipalAluno la = new LayoutPrincipalAluno();
                             UI.getCurrent().setContent(la);
+                            VaadinSession.getCurrent().setAttribute("professor", null);
+                            {
+                                try {
+                                    VaadinSession.getCurrent().setAttribute("aluno", new AlunoDao().selectByUser(user.getId()).getId());
+                                    VaadinSession.getCurrent().setAttribute("usuario", user.getId());
+                                } catch (SQLException ex) {
+                                }
+                            }
                             break;
                     }
                 } else {

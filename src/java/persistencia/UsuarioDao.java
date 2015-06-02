@@ -22,8 +22,9 @@ import java.util.logging.Logger;
  */
 public class UsuarioDao {
     
-    public void insert(Usuario usuario) throws SQLException  {
+    public int insert(Usuario usuario) throws SQLException  {
         
+        int last_inserted_id = 0;
         usuario.setId(getProximoCodigo());
         
         PreparedStatement ps = DBConnection.getInstance().prepareStatement
@@ -36,7 +37,13 @@ public class UsuarioDao {
             ps.setString(3, usuario.getSenha());
             ps.setInt(4, usuario.getPerfil());
 
-            ps.execute();
+            ps.executeUpdate();
+
+            ResultSet rs = ps.getGeneratedKeys();
+            if(rs.next())
+            {
+                last_inserted_id = rs.getInt(1);
+            }
             
         } catch (SQLException ex) {
             Logger.getLogger(UsuarioDao.class.getName()).log(Level.SEVERE, null, ex);
@@ -47,6 +54,7 @@ public class UsuarioDao {
             }
         }
         
+        return last_inserted_id;
         
     }
 
@@ -112,7 +120,7 @@ public class UsuarioDao {
 
     
     
-    private int getProximoCodigo() throws SQLException {
+    protected int getProximoCodigo() throws SQLException {
         PreparedStatement ps = DBConnection.getInstance().prepareStatement("Select max(id) as maximo "
                 + " from usuario ");
 

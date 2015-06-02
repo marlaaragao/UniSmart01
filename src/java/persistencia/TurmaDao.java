@@ -68,9 +68,18 @@ public class TurmaDao {
     }
     
     public List<Turma> selectAll() throws SQLException {
+        return selectAll(null);
+
+    }
+    
+    public List<Turma> selectAll(String filtro) throws SQLException {
         List<Turma> listaTurmas = new ArrayList<>();
         
         String sql = "Select * from turma ";
+        
+        if (filtro != null && filtro != "") {
+            sql += " where " + filtro;
+        }
         
         PreparedStatement ps = DBConnection.getInstance().prepareStatement(sql);
         

@@ -6,6 +6,7 @@
 
 package views.professores;
 
+import com.vaadin.server.VaadinSession;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.ComboBox;
@@ -154,7 +155,7 @@ public class LayoutCadastroProfessores extends VerticalLayout {
             
             professor.setAtuacao((int) atuacao.getValue());
             professor.setCpf(cpf.getValue());
-
+            
             if (operacao.equals(Operacao.ALTERAR)) {
                 new ProfessorDao().update(professor);
                 

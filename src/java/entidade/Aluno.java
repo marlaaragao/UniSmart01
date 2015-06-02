@@ -17,13 +17,15 @@ public class Aluno {
     private String cpf;
     private String nome;
     private int curso;
+    private int usuario;
 
-    public Aluno(int id, int matricula, String cpf, String nome, int curso) {
+    public Aluno(int id, int matricula, String cpf, String nome, int curso, int usuario) {
         this.id = id;
         this.matricula = matricula;
         this.cpf = cpf;
         this.nome = nome;
         this.curso = curso;
+        this.usuario = usuario;
     }
 
     public Aluno() {
@@ -67,6 +69,14 @@ public class Aluno {
 
     public void setCurso(int curso) {
         this.curso = curso;
+    }
+
+    public int getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(int usuario) {
+        this.usuario = usuario;
     }
     
     

@@ -16,15 +16,25 @@ public class Professor {
     private String nome;
     private String cpf;
     private int atuacao;
+    private int usuario;
 
     public Professor() {
     }
 
-    public Professor(int id, String nome, String cpf, int area) {
+    public Professor(int id, String nome, String cpf, int atuacao, int usuario) {
         this.id = id;
         this.nome = nome;
         this.cpf = cpf;
-        this.atuacao = area;
+        this.atuacao = atuacao;
+        this.usuario = usuario;
+    }
+
+    public int getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(int usuario) {
+        this.usuario = usuario;
     }
 
     public int getId() {

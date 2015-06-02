@@ -25,6 +25,8 @@ public class CreateTables {
     public void createTables() throws SQLException {
         
         try {
+            createTablePerfil();
+            createTableUsuario();
             createTableCurso();
             createTableAluno();
             createTableAtuacao();
@@ -32,10 +34,8 @@ public class CreateTables {
             createTableDisciplina();
             createTableTurma();
             createTableAlunoTurma();
-            createTablePerfil();
-            createTableUsuario();
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            System.out.println(ex.getErrorCode() + " - " + ex.getMessage());
         }
     }
     
@@ -72,8 +72,11 @@ public class CreateTables {
                     + "    cpf varchar(14) not null,"
                     + "    nome varchar(150) not null,"
                     + "    curso int not null,"
+                    + "    usuario int ,"
                     + "    FOREIGN KEY (curso) "
-                    + "    REFERENCES curso(id)"
+                    + "    REFERENCES curso(id),"
+                    + "    FOREIGN KEY (usuario) "
+                    + "    REFERENCES usuario(id)"
                     + ")ENGINE=INNODB;";
                     
         try {
@@ -126,8 +129,11 @@ public class CreateTables {
                     + "    cpf varchar(14) not null,"
                     + "    nome varchar(150) not null,"
                     + "    atuacao int not null,"
+                    + "    usuario int ,"
                     + "    FOREIGN KEY (atuacao) "
-                    + "    REFERENCES atuacao(id) "
+                    + "    REFERENCES atuacao(id), "
+                    + "    FOREIGN KEY (usuario) "
+                    + "    REFERENCES usuario(id) "
                     + ")ENGINE=INNODB;";
                    
         try {
@@ -325,9 +331,9 @@ public class CreateTables {
         
         String sql1 = "insert into usuario (id, nome_usuario, senha, perfil) values (1, \"marla\", \"1234\", 3);";
         
-        String sql2 = "insert into usuario (id, nome_usuario, senha, perfil) values (2, \"ayrton\", \"1234\", 2);";
+        String sql2 = "insert into usuario (id, nome_usuario, senha, perfil) values (2, \"adailton\", \"1234\", 2);";
         
-        String sql3 = "insert into usuario (id, nome_usuario, senha, perfil) values (3, \"adailton\", \"1234\", 1);";
+        String sql3 = "insert into usuario (id, nome_usuario, senha, perfil) values (3, \"ayrton\", \"1234\", 1);";
         
         try {
             PreparedStatement stmt = connection.prepareStatement(sql1);
@@ -347,7 +353,7 @@ public class CreateTables {
              if (DerbyUtils.tableAlreadyExists(e)) { //check if the exception is because of pre-existing table.
                  System.out.println("");
             } else {
-                e.printStackTrace();
+                System.out.println(e.getMessage());
             }
         }
     }
@@ -378,7 +384,7 @@ public class CreateTables {
              if (DerbyUtils.tableAlreadyExists(e)) { //check if the exception is because of pre-existing table.
                  System.out.println("");
             } else {
-                e.printStackTrace();
+                 System.out.println(e.getMessage());
             }
         }
     }
@@ -409,7 +415,7 @@ public class CreateTables {
              if (DerbyUtils.tableAlreadyExists(e)) { //check if the exception is because of pre-existing table.
                  System.out.println("");
             } else {
-                e.printStackTrace();
+                 System.out.println(e.getMessage());
             }
         }
     }
@@ -418,7 +424,7 @@ public class CreateTables {
         
         String sql1 = "insert into professor (id, cpf, nome, atuacao) values (1, \"02961714176\", \"Ricardo Teles\", 1);";
         
-        String sql2 = "insert into professor (id, cpf, nome, atuacao) values (2, \"34324234244\", \"Adailton Araujo\", 2);";
+        String sql2 = "insert into professor (id, cpf, nome, atuacao, usuario) values (2, \"34324234244\", \"Adailton Araujo\", 2, 2);";
         
         String sql3 = "insert into professor (id, cpf, nome, atuacao) values (3, \"67653535453\", \"Bruno Silvestre\", 3);";
         
@@ -440,7 +446,7 @@ public class CreateTables {
              if (DerbyUtils.tableAlreadyExists(e)) { //check if the exception is because of pre-existing table.
                  System.out.println("");
             } else {
-                e.printStackTrace();
+                System.out.println(e.getMessage());
             }
         }
     }
@@ -471,14 +477,14 @@ public class CreateTables {
              if (DerbyUtils.tableAlreadyExists(e)) { //check if the exception is because of pre-existing table.
                  System.out.println("");
             } else {
-                e.printStackTrace();
+                System.out.println(e.getMessage());
             }
         }
     }
     
     private void insertTableAluno() throws SQLException {
         
-        String sql1 = "insert into aluno (id, matricula, cpf, nome, curso) values (1, 123456, \"12312312323\", \"Maria\", 1);";
+        String sql1 = "insert into aluno (id, matricula, cpf, nome, curso, usuario) values (1, 123456, \"12312312323\", \"Marla\", 1, 1);";
         
         String sql2 = "insert into aluno (id, matricula, cpf, nome, curso) values (2, 333333, \"34655345534\", \"Joao\", 2);";
         
@@ -502,7 +508,7 @@ public class CreateTables {
              if (DerbyUtils.tableAlreadyExists(e)) { //check if the exception is because of pre-existing table.
                  System.out.println("");
             } else {
-                e.printStackTrace();
+                 System.out.println(e.getMessage());
             }
         }
     }

@@ -15,6 +15,7 @@ import com.vaadin.ui.MenuBar.Command;
 import com.vaadin.ui.MenuBar.MenuItem;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.Reindeer;
+import views.alunos.LayoutInscricaoTurma;
 import views.areas.LayoutCadastroAtuacao;
 import views.atuacaos.LayoutAtuacao;
 import views.disciplinas.LayoutDisciplinas;
@@ -61,46 +62,13 @@ public class LayoutPrincipalAluno extends VerticalLayout {
     }
 
     private void init() {
-        
-        HorizontalLayout hLayout = new HorizontalLayout();
-        hLayout.setImmediate(true);
-        hLayout.setSpacing(true);
-        
-        btnDisciplinas = new Button("Disciplinas");
-        btnDisciplinas.setImmediate(true);
-        btnDisciplinas.addClickListener(new Button.ClickListener() {
-
-            @Override
-            public void buttonClick(Button.ClickEvent event) { 
-                
-                content.removeAllComponents();
-                
-                LayoutDisciplinas l = new LayoutDisciplinas(content);
-                content.addComponent(l);
-            }
-        });
-        
-        hLayout.addComponent(btnDisciplinas);  
-        
+               
         addMenuBar();
     }
 
     public void addMenuBar() {
 
         menubar.setWidth("100%");
-
-        /**********************************Disciplinas**************************************/
-        final MenuBar.MenuItem disciplinas = menubar.addItem("Disciplinas", null);
-        disciplinas.addItem("Mostrar Disciplinas Disponiveis", new Command() {
-
-            @Override
-            public void menuSelected(MenuItem selectedItem) {
-                content.removeAllComponents();
-                
-                LayoutDisciplinas l = new LayoutDisciplinas(content);
-                content.addComponent(l);
-            }
-        });
 
         /****************************Turmas*******************************/
         final MenuBar.MenuItem turmas = menubar.addItem("Turmas", null);
@@ -110,7 +78,7 @@ public class LayoutPrincipalAluno extends VerticalLayout {
             public void menuSelected(MenuItem selectedItem) {
                 content.removeAllComponents();
                 
-                LayoutTurmas l = new LayoutTurmas(content);
+                LayoutInscricaoTurma l = new LayoutInscricaoTurma(content);
                 content.addComponent(l);
             }
         });
