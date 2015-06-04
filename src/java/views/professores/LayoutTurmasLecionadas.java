@@ -26,6 +26,11 @@ import persistencia.TurmaDao;
 
 /**
  *
+ * Layout que permite a visualização das turmar lecionadas pelos professores
+ * 
+ * Referencia o Caso de Uso CU2 - Lançar Notas
+ * Referencia o Requisito R2 - Permitir Lançamento de Notas
+ * 
  * @author Marla Aragão
  */
 public class LayoutTurmasLecionadas extends VerticalLayout {

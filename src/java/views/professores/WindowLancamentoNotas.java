@@ -26,7 +26,11 @@ import persistencia.AlunoTurmaDao;
 import persistencia.TurmaDao;
 
 /**
- *
+ * Layout que permite o lançamento de notas pelos professores
+ * 
+ * Referencia o Caso de Uso CU2 - Lançar Notas
+ * Referencia o Requisito R2 - Permitir Lançamento de Notas
+ * 
  * @author Marla Aragão
  */
 public class WindowLancamentoNotas extends Window {
@@ -185,6 +189,14 @@ public class WindowLancamentoNotas extends Window {
         return layoutLancamentosNotas;
     }
     
+    /**
+     * Salvas a notas e faltas lançadas para cada aluno da turma lecionada
+     * 
+     * Referencia o Caso de Uso CU2 - Lançar Notas
+     * Referencia o Requisito R2 - Permitir Lançamento de Notas
+     * 
+     * @return 
+     */
     private boolean salvarDados() {
         
         AlunoTurma aluno_turma = new AlunoTurma();

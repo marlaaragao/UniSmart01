@@ -19,7 +19,10 @@ import persistencia.AtuacaoDao;
 import views.LayoutPrincipalTecnico;
 
 /**
- *
+ * Layout que permite cadastro das Áreas de Atuação
+ * 
+ * Referencia o Requisito R5 - Efetuar cadastros de disciplinas, turmas, professores, alunos, áreas.
+ * 
  * @author Marla Aragão
  */
 public class LayoutCadastroAtuacao extends VerticalLayout {

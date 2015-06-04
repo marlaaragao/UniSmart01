@@ -15,18 +15,20 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.TextField;
-import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import entidade.Atuacao;
 import entidade.Disciplina;
 import java.util.Collection;
 import persistencia.AtuacaoDao;
 import persistencia.DisciplinaDao;
-import views.LayoutPrincipalTecnico;
-import views.tecnicos.disciplinas.LayoutDisciplinas;
 
 /**
  *
+ * Layout que permite o cadastro de disciplinas
+ * 
+ * Referencia o Requisito R3 - Manter informações cadastrais das disciplinas no currículo escolar
+ * Referencia o Requisito R5 - Efetuar cadastros de disciplinas, turmas, professores, alunos, áreas
+ * 
  * @author Marla Aragão
  */
 public class LayoutCadastroDisciplinas extends VerticalLayout {

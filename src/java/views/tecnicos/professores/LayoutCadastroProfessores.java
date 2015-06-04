@@ -23,7 +23,9 @@ import persistencia.ProfessorDao;
 import views.LayoutPrincipalTecnico;
 
 /**
- *
+ * Layout que permite cadastro de professores
+ * Referencia o Requisito R5 - Efetuar cadastros de disciplinas, turmas, professores, alunos, áreas.
+ * 
  * @author Marla Aragão
  */
 public class LayoutCadastroProfessores extends VerticalLayout {

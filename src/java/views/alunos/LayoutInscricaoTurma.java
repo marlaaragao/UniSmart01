@@ -26,7 +26,12 @@ import persistencia.ProfessorDao;
 import persistencia.TurmaDao;
 
 /**
- *
+ * Classe de Layout que permite ao Aluno se inscrever nas turmas disponíveis
+ * 
+ * Relacionada ao cumprimento do Caso de Uso CU3 - Inscrever em Disciplinas
+ * Referencia CU5 - Limitar Inscrições
+ * Referencia o Requisito R7 - Permitir que os alunos efetuem ainscrição em disciplinas do semestre
+ * 
  * @author Marla Aragão
  */
 public class LayoutInscricaoTurma extends VerticalLayout {
@@ -150,6 +155,16 @@ public class LayoutInscricaoTurma extends VerticalLayout {
         return vLayout;
     }
     
+    /**
+     * Efetua a Inscrição do aluno 
+     * Referencia CU3 - Efetuar Inscrições
+     * 
+     * Limita Inscrições ao número máx. de alunos permitidos na turma
+     * Referencia CU5 - Limitar Inscrições
+     * 
+     * @param turma
+     * @return 
+     */
     private Boolean efetuarInscricao(int turma) {
 
         Turma t = null;

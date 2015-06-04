@@ -9,8 +9,9 @@ package views.alunos;
  * Classe de Layout que mostra o histórico do Aluno no Semestre atual, 
  * ou escolhendo outro Período.
  * 
- * Relacionada ao cumprimento do requisito R1 - Permitir Visualização 
- * de Notas Obtidas no Semestre Letivo.
+ * Referencia o Caso de Uso CU4 - Pesquisar Histórico
+ * Referencia o Requisito R3 - Manter informações cadastraisdas disciplinas no currículo escolar
+ * Referencia o Requisito R9 - Manter informações cadastrais dos alunos e seus históricos escolares
  * 
  * @author Marla Aragão
  */

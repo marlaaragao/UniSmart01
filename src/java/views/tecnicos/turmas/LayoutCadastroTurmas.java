@@ -17,9 +17,7 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.OptionGroup;
 import com.vaadin.ui.TextField;
-import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
-import entidade.Atuacao;
 import entidade.Disciplina;
 import entidade.Professor;
 import entidade.Turma;
@@ -31,7 +29,15 @@ import persistencia.ProfessorDao;
 import persistencia.TurmaDao;
 
 /**
- *
+ * Layout que permite o cadastro de turmas
+ * 
+ * Referencia o Caso de Uso CU5 - Limitar Inscrições
+ * Referencia o Requisito R4 - Manter a abertura de turmas para uma disciplina
+ * Referencia o Requisito R5 - Efetuar cadastros de disciplinas, turmas, professores, alunos, áreas.
+ * Referencia o Requisito R6 - Mostrar horarios e dias da semana da turma
+ * Referencia o Requisito R8 - Permitir o controle do andamento das inscrições
+ * Referencia o Requisito R10 - Cadastrar quantidade máxima de inscrições por turma
+ * 
  * @author Marla Aragão
  */
 public class LayoutCadastroTurmas extends VerticalLayout {
