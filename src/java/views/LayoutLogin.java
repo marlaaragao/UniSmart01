@@ -77,13 +77,18 @@ public class LayoutLogin extends VerticalLayout {
                     
                     switch(user.getPerfil()) {
                         case 1:
+                            VaadinSession.getCurrent().setAttribute("aluno", null);
+                            VaadinSession.getCurrent().setAttribute("usuario", null);
+                            VaadinSession.getCurrent().setAttribute("professor", null);
+                            
                             LayoutPrincipalTecnico lt = new LayoutPrincipalTecnico();
                             UI.getCurrent().setContent(lt);
                             VaadinSession.getCurrent().setAttribute("usuario", user.getId());
                             break;
                         case 2:
-                            
                             VaadinSession.getCurrent().setAttribute("aluno", null);
+                            VaadinSession.getCurrent().setAttribute("usuario", null);
+                            VaadinSession.getCurrent().setAttribute("professor", null);
                             {
                                 try {
                                     VaadinSession.getCurrent().setAttribute("professor", new ProfessorDao().selectByUser(user.getId()).getId());
@@ -95,6 +100,8 @@ public class LayoutLogin extends VerticalLayout {
                             UI.getCurrent().setContent(lp);
                             break;
                         case 3:
+                            VaadinSession.getCurrent().setAttribute("aluno", null);
+                            VaadinSession.getCurrent().setAttribute("usuario", null);
                             VaadinSession.getCurrent().setAttribute("professor", null);
                             {
                                 try {

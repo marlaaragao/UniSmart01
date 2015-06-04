@@ -299,7 +299,7 @@ public class CreateTables {
              if (DerbyUtils.tableAlreadyExists(e)) { //check if the exception is because of pre-existing table.
                  System.out.println("");
             } else {
-                e.printStackTrace();
+                 System.out.println(e.getMessage());
             }
         }
     }

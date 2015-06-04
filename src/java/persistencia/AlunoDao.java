@@ -89,6 +89,30 @@ public class AlunoDao {
 
     }
     
+    public List<Aluno> selectAllTurma(int turma) throws SQLException {
+        List<Aluno> listaAlunos = new ArrayList<>();
+        
+        String sql = "Select * from aluno inner join aluno_turma on (aluno_turma.id_aluno = aluno.id ) "
+                + " where id_turma = ? ";
+        
+        PreparedStatement ps = DBConnection.getInstance().prepareStatement(sql);
+        ps.setInt(1, turma);
+        
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()) {
+            Aluno aluno = new Aluno();
+            aluno.setId(rs.getInt("id"));
+            aluno.setCpf(rs.getString("cpf"));
+            aluno.setNome(rs.getString("nome"));
+            aluno.setMatricula(rs.getInt("matricula"));
+            aluno.setCurso(rs.getInt("curso"));
+            aluno.setUsuario(rs.getInt("usuario"));
+            listaAlunos.add(aluno);
+        }
+        return listaAlunos;
+
+    }
+    
     public List<Aluno> selectAllCurso(int curso) throws SQLException {
         List<Aluno> listaAlunos = new ArrayList<>();
         

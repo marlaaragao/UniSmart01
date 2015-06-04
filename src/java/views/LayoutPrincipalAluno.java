@@ -6,11 +6,18 @@
 
 package views;
 
+import com.vaadin.client.componentlocator.VaadinFinderLocatorStrategy;
+import com.vaadin.server.Page;
+import com.vaadin.server.VaadinSession;
 import com.vaadin.shared.ui.label.ContentMode;
+import com.vaadin.ui.Alignment;
+import com.vaadin.ui.Button;
+import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.MenuBar;
 import com.vaadin.ui.MenuBar.Command;
 import com.vaadin.ui.MenuBar.MenuItem;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.Reindeer;
 import views.alunos.LayoutInscricaoTurma;
@@ -23,6 +30,7 @@ public class LayoutPrincipalAluno extends VerticalLayout {
     
     private VerticalLayout content;
     private MenuBar menubar = new MenuBar();
+    private Button logout = new Button("Sair");
     
     public LayoutPrincipalAluno() {
         
@@ -30,10 +38,27 @@ public class LayoutPrincipalAluno extends VerticalLayout {
         setSpacing(true);
         setMargin(true);
         
+        HorizontalLayout hLayout = new HorizontalLayout();
+        hLayout.setImmediate(true);
+        hLayout.setWidth("100%");
+        
         Label labelTitulo = new Label("<font size=\"3\" color=\"#287ece\"><b>UNISMART 1.0</b></font>"
         , ContentMode.HTML);
         
-        addComponent(labelTitulo);
+        hLayout.addComponent(labelTitulo);
+        hLayout.addComponent(logout);
+        logout.addClickListener(new Button.ClickListener() {
+
+            @Override
+            public void buttonClick(Button.ClickEvent event) {
+                UI.getCurrent().setContent(new LayoutLogin());
+            }
+        });
+        
+        hLayout.setComponentAlignment(logout, Alignment.MIDDLE_RIGHT);
+        
+        addComponent(hLayout);
+        
         addComponent(new Label("<hr />", ContentMode.HTML));
         
         Label label = new Label("<font size=\"2\" color=\"#CC3300\"><b>Perfil: Aluno</b></font>"

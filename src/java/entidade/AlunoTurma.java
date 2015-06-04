@@ -17,6 +17,9 @@ public class AlunoTurma {
     private double nota_aluno;
     private int num_faltas;
 
+    public AlunoTurma() {
+    }
+
     public AlunoTurma(int id_aluno, int id_turma, double nota_aluno, int num_faltas) {
         this.id_aluno = id_aluno;
         this.id_turma = id_turma;
