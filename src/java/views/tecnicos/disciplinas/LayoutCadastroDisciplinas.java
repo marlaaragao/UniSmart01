@@ -24,10 +24,11 @@ import persistencia.DisciplinaDao;
 
 /**
  *
- * Layout que permite o cadastro de disciplinas
+ * Layout que permite cadastro de disciplinas
+ * Referencia ao caso de uso CU10 - Cadastrar Disciplinas
+ * Referencia o Requisito R5 - Efetuar cadastros de disciplinas, turmas, professores, alunos, áreas.
  * 
  * Referencia o Requisito R3 - Manter informações cadastrais das disciplinas no currículo escolar
- * Referencia o Requisito R5 - Efetuar cadastros de disciplinas, turmas, professores, alunos, áreas
  * 
  * @author Marla Aragão
  */

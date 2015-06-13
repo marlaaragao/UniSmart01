@@ -26,7 +26,10 @@ import persistencia.ProfessorDao;
 import views.LayoutPrincipalTecnico;
 
 /**
- *
+ * Layout que mostra os professores cadastrados
+ * Referencia ao caso de uso CU11 - Cadastrar Professores
+ * Referencia o Requisito R11 - Mostrar disciplinas, turmas, professores, alunos, áreas.
+ * 
  * @author Marla Aragão
  */
 public class LayoutProfessores extends VerticalLayout {

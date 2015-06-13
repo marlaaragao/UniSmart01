@@ -12,15 +12,13 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.TextField;
-import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import entidade.Atuacao;
 import persistencia.AtuacaoDao;
-import views.LayoutPrincipalTecnico;
 
 /**
- * Layout que permite cadastro das Áreas de Atuação
- * 
+ * Layout que permite cadastro de areas de atuação
+ * Referencia ao caso de uso CU8 - Cadastrar Areas de Atuacao
  * Referencia o Requisito R5 - Efetuar cadastros de disciplinas, turmas, professores, alunos, áreas.
  * 
  * @author Marla Aragão

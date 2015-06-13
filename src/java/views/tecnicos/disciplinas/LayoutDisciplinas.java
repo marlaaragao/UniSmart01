@@ -26,7 +26,9 @@ import persistencia.DisciplinaDao;
 import views.LayoutPrincipalTecnico;
 
 /**
- *
+ * Layout que mostra as disciplinas cadastradas
+ * Referencia ao caso de uso CU10 - Cadastrar Disciplinas
+ * Referencia o Requisito R11 - Mostrar disciplinas, turmas, professores, alunos, áreas.
  * @author Marla Aragão
  */
 public class LayoutDisciplinas extends VerticalLayout {
@@ -89,7 +91,8 @@ public class LayoutDisciplinas extends VerticalLayout {
                     LayoutCadastroDisciplinas l = new LayoutCadastroDisciplinas(LayoutCadastroDisciplinas.Operacao.ALTERAR, content);
                     l.loadDados(disciplina);
                     
-                    UI.getCurrent().setContent(l);
+                    content.removeAllComponents();
+                    content.addComponent(l);
                 }
             }
         });
@@ -102,8 +105,10 @@ public class LayoutDisciplinas extends VerticalLayout {
 
             @Override
             public void buttonClick(Button.ClickEvent event) {
-                LayoutCadastroDisciplinas l = new LayoutCadastroDisciplinas(LayoutCadastroDisciplinas.Operacao.INCLUIR, content);
-                UI.getCurrent().setContent(l);
+                LayoutCadastroDisciplinas l = new LayoutCadastroDisciplinas(LayoutCadastroDisciplinas.Operacao.INCLUIR
+                        , content);
+                content.removeAllComponents();
+                content.addComponent(l);
             }
         });
         

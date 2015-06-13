@@ -26,7 +26,9 @@ import views.LayoutPrincipalTecnico;
 import views.tecnicos.areas.LayoutCadastroAtuacao;
 
 /**
- *
+ * Layout que mostra as areas de atuacao cadastradas
+ * Referencia ao caso de uso CU12 - Cadastrar Disciplinas
+ * Referencia o Requisito R11 - Mostrar disciplinas, turmas, professores, alunos, áreas.
  * @author Marla Aragão
  */
 public class LayoutAtuacao extends VerticalLayout {

@@ -30,6 +30,9 @@ import persistencia.TurmaDao;
 
 /**
  * Layout que permite o cadastro de turmas
+
+ * Referencia ao caso de uso CU8 - Cadastrar Turmas
+ * Referencia o Requisito R5 - Efetuar cadastros de disciplinas, turmas, professores, alunos, áreas.
  * 
  * Referencia o Caso de Uso CU5 - Limitar Inscrições
  * Referencia o Requisito R4 - Manter a abertura de turmas para uma disciplina

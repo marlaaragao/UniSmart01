@@ -27,7 +27,9 @@ import persistencia.TurmaDao;
 import views.LayoutPrincipalTecnico;
 
 /**
- *
+ * Layout que mostra as turmas cadastradas
+ * Referencia ao caso de uso CU13 - Cadastrar Disciplinas
+ * Referencia o Requisito R11 - Mostrar disciplinas, turmas, professores, alunos, áreas.
  * @author Marla Aragão
  */
 public class LayoutTurmas extends VerticalLayout {

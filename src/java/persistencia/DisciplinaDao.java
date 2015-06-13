@@ -126,7 +126,7 @@ public class DisciplinaDao {
             ps.setDouble(2, disciplina.getAno());
             ps.setDouble(3, disciplina.getAtuacao());
             ps.setBoolean(4, disciplina.isAtiva());
-            ps.setInt(4, disciplina.getId());
+            ps.setInt(5, disciplina.getId());
             ps.execute();
 
         } catch (SQLException ex) {

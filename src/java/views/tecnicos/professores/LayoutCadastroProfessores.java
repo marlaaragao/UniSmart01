@@ -20,10 +20,10 @@ import entidade.Professor;
 import java.util.Collection;
 import persistencia.AtuacaoDao;
 import persistencia.ProfessorDao;
-import views.LayoutPrincipalTecnico;
 
 /**
  * Layout que permite cadastro de professores
+ * Referencia ao caso de uso CU7 - Cadastrar Professores
  * Referencia o Requisito R5 - Efetuar cadastros de disciplinas, turmas, professores, alunos, áreas.
  * 
  * @author Marla Aragão
